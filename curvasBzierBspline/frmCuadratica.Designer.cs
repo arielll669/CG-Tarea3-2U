@@ -32,7 +32,15 @@
             this.panelDibujo = new System.Windows.Forms.Panel();
             this.btnLimpiarRastro = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblVelocidad = new System.Windows.Forms.Label();
+            this.trackBarVelocidad = new System.Windows.Forms.TrackBar();
+            this.btnPlayPause = new System.Windows.Forms.Button();
+            this.trackBarT = new System.Windows.Forms.TrackBar();
+            this.btnReset = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chkMostrarPoligono = new System.Windows.Forms.CheckBox();
+            this.chkMostrarConstruccion = new System.Windows.Forms.CheckBox();
+            this.chkDejarRastro = new System.Windows.Forms.CheckBox();
             this.panelInfo = new System.Windows.Forms.Panel();
             this.lblTituloP0 = new System.Windows.Forms.Label();
             this.lblP0 = new System.Windows.Forms.Label();
@@ -43,19 +51,11 @@
             this.lblTituloT = new System.Windows.Forms.Label();
             this.lblP2 = new System.Windows.Forms.Label();
             this.timerAnimacion = new System.Windows.Forms.Timer(this.components);
-            this.trackBarT = new System.Windows.Forms.TrackBar();
-            this.trackBarVelocidad = new System.Windows.Forms.TrackBar();
-            this.btnPlayPause = new System.Windows.Forms.Button();
-            this.btnReset = new System.Windows.Forms.Button();
-            this.lblVelocidad = new System.Windows.Forms.Label();
-            this.chkMostrarPoligono = new System.Windows.Forms.CheckBox();
-            this.chkMostrarConstruccion = new System.Windows.Forms.CheckBox();
-            this.chkDejarRastro = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarVelocidad)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarT)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.panelInfo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarT)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarVelocidad)).BeginInit();
             this.SuspendLayout();
             // 
             // panelDibujo
@@ -89,6 +89,47 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Controles de Animación";
             // 
+            // lblVelocidad
+            // 
+            this.lblVelocidad.AutoSize = true;
+            this.lblVelocidad.Location = new System.Drawing.Point(45, 135);
+            this.lblVelocidad.Name = "lblVelocidad";
+            this.lblVelocidad.Size = new System.Drawing.Size(89, 16);
+            this.lblVelocidad.TabIndex = 16;
+            this.lblVelocidad.Text = "Velocidad: 20";
+            // 
+            // trackBarVelocidad
+            // 
+            this.trackBarVelocidad.Location = new System.Drawing.Point(43, 169);
+            this.trackBarVelocidad.Name = "trackBarVelocidad";
+            this.trackBarVelocidad.Size = new System.Drawing.Size(253, 56);
+            this.trackBarVelocidad.TabIndex = 5;
+            // 
+            // btnPlayPause
+            // 
+            this.btnPlayPause.Location = new System.Drawing.Point(43, 87);
+            this.btnPlayPause.Name = "btnPlayPause";
+            this.btnPlayPause.Size = new System.Drawing.Size(75, 23);
+            this.btnPlayPause.TabIndex = 6;
+            this.btnPlayPause.Text = "Play";
+            this.btnPlayPause.UseVisualStyleBackColor = true;
+            // 
+            // trackBarT
+            // 
+            this.trackBarT.Location = new System.Drawing.Point(43, 29);
+            this.trackBarT.Name = "trackBarT";
+            this.trackBarT.Size = new System.Drawing.Size(253, 56);
+            this.trackBarT.TabIndex = 4;
+            // 
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(124, 87);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(75, 23);
+            this.btnReset.TabIndex = 7;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.chkMostrarPoligono);
@@ -100,6 +141,40 @@
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Opciones de Visualización";
+            // 
+            // chkMostrarPoligono
+            // 
+            this.chkMostrarPoligono.AutoSize = true;
+            this.chkMostrarPoligono.Checked = true;
+            this.chkMostrarPoligono.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkMostrarPoligono.Location = new System.Drawing.Point(7, 42);
+            this.chkMostrarPoligono.Name = "chkMostrarPoligono";
+            this.chkMostrarPoligono.Size = new System.Drawing.Size(192, 20);
+            this.chkMostrarPoligono.TabIndex = 17;
+            this.chkMostrarPoligono.Text = "Mostrar polígono de control";
+            this.chkMostrarPoligono.UseVisualStyleBackColor = true;
+            // 
+            // chkMostrarConstruccion
+            // 
+            this.chkMostrarConstruccion.AutoSize = true;
+            this.chkMostrarConstruccion.Checked = true;
+            this.chkMostrarConstruccion.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkMostrarConstruccion.Location = new System.Drawing.Point(6, 80);
+            this.chkMostrarConstruccion.Name = "chkMostrarConstruccion";
+            this.chkMostrarConstruccion.Size = new System.Drawing.Size(213, 20);
+            this.chkMostrarConstruccion.TabIndex = 18;
+            this.chkMostrarConstruccion.Text = "Mostrar algoritmo De Casteljau";
+            this.chkMostrarConstruccion.UseVisualStyleBackColor = true;
+            // 
+            // chkDejarRastro
+            // 
+            this.chkDejarRastro.AutoSize = true;
+            this.chkDejarRastro.Location = new System.Drawing.Point(7, 116);
+            this.chkDejarRastro.Name = "chkDejarRastro";
+            this.chkDejarRastro.Size = new System.Drawing.Size(168, 20);
+            this.chkDejarRastro.TabIndex = 19;
+            this.chkDejarRastro.Text = "Dejar rastro de la curva";
+            this.chkDejarRastro.UseVisualStyleBackColor = true;
             // 
             // panelInfo
             // 
@@ -192,81 +267,6 @@
             this.lblP2.TabIndex = 13;
             this.lblP2.Text = "(0, 0)";
             // 
-            // trackBarT
-            // 
-            this.trackBarT.Location = new System.Drawing.Point(43, 29);
-            this.trackBarT.Name = "trackBarT";
-            this.trackBarT.Size = new System.Drawing.Size(253, 56);
-            this.trackBarT.TabIndex = 4;
-            // 
-            // trackBarVelocidad
-            // 
-            this.trackBarVelocidad.Location = new System.Drawing.Point(43, 169);
-            this.trackBarVelocidad.Name = "trackBarVelocidad";
-            this.trackBarVelocidad.Size = new System.Drawing.Size(253, 56);
-            this.trackBarVelocidad.TabIndex = 5;
-            // 
-            // btnPlayPause
-            // 
-            this.btnPlayPause.Location = new System.Drawing.Point(43, 87);
-            this.btnPlayPause.Name = "btnPlayPause";
-            this.btnPlayPause.Size = new System.Drawing.Size(75, 23);
-            this.btnPlayPause.TabIndex = 6;
-            this.btnPlayPause.Text = "Play";
-            this.btnPlayPause.UseVisualStyleBackColor = true;
-            // 
-            // btnReset
-            // 
-            this.btnReset.Location = new System.Drawing.Point(124, 87);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(75, 23);
-            this.btnReset.TabIndex = 7;
-            this.btnReset.Text = "Reset";
-            this.btnReset.UseVisualStyleBackColor = true;
-            // 
-            // lblVelocidad
-            // 
-            this.lblVelocidad.AutoSize = true;
-            this.lblVelocidad.Location = new System.Drawing.Point(45, 135);
-            this.lblVelocidad.Name = "lblVelocidad";
-            this.lblVelocidad.Size = new System.Drawing.Size(82, 16);
-            this.lblVelocidad.TabIndex = 16;
-            this.lblVelocidad.Text = "Velocidad: 5";
-            // 
-            // chkMostrarPoligono
-            // 
-            this.chkMostrarPoligono.AutoSize = true;
-            this.chkMostrarPoligono.Checked = true;
-            this.chkMostrarPoligono.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkMostrarPoligono.Location = new System.Drawing.Point(7, 42);
-            this.chkMostrarPoligono.Name = "chkMostrarPoligono";
-            this.chkMostrarPoligono.Size = new System.Drawing.Size(192, 20);
-            this.chkMostrarPoligono.TabIndex = 17;
-            this.chkMostrarPoligono.Text = "Mostrar polígono de control";
-            this.chkMostrarPoligono.UseVisualStyleBackColor = true;
-            // 
-            // chkMostrarConstruccion
-            // 
-            this.chkMostrarConstruccion.AutoSize = true;
-            this.chkMostrarConstruccion.Checked = true;
-            this.chkMostrarConstruccion.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkMostrarConstruccion.Location = new System.Drawing.Point(6, 80);
-            this.chkMostrarConstruccion.Name = "chkMostrarConstruccion";
-            this.chkMostrarConstruccion.Size = new System.Drawing.Size(213, 20);
-            this.chkMostrarConstruccion.TabIndex = 18;
-            this.chkMostrarConstruccion.Text = "Mostrar algoritmo De Casteljau";
-            this.chkMostrarConstruccion.UseVisualStyleBackColor = true;
-            // 
-            // chkDejarRastro
-            // 
-            this.chkDejarRastro.AutoSize = true;
-            this.chkDejarRastro.Location = new System.Drawing.Point(7, 116);
-            this.chkDejarRastro.Name = "chkDejarRastro";
-            this.chkDejarRastro.Size = new System.Drawing.Size(168, 20);
-            this.chkDejarRastro.TabIndex = 19;
-            this.chkDejarRastro.Text = "Dejar rastro de la curva";
-            this.chkDejarRastro.UseVisualStyleBackColor = true;
-            // 
             // frmCuadratica
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -280,12 +280,12 @@
             this.Text = "frmCuadratica";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarVelocidad)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarT)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.panelInfo.ResumeLayout(false);
             this.panelInfo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarT)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarVelocidad)).EndInit();
             this.ResumeLayout(false);
 
         }

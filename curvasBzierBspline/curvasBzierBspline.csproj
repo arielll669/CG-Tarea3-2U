@@ -46,12 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="clsCurvaBezier.cs" />
     <Compile Include="frmCuadratica.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmCuadratica.Designer.cs">
       <DependentUpon>frmCuadratica.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCubica.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCubica.Designer.cs">
+      <DependentUpon>frmCubica.cs</DependentUpon>
     </Compile>
     <Compile Include="lineal\clsCurvaBezier.cs" />
     <Compile Include="lineal\clsPunto.cs" />
@@ -71,6 +76,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmCuadratica.resx">
       <DependentUpon>frmCuadratica.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCubica.resx">
+      <DependentUpon>frmCubica.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmLineal.resx">
       <DependentUpon>frmLineal.cs</DependentUpon>
@@ -102,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="cuadratica\" />
+    <Folder Include="cubica\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

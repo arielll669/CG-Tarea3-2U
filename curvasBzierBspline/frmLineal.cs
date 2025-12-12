@@ -60,7 +60,7 @@ namespace curvasBzierBspline
             // Configurar TrackBar Velocidad (1 a 20)
             trackBarVelocidad.Minimum = 1;
             trackBarVelocidad.Maximum = 20;
-            trackBarVelocidad.Value = 5; // Velocidad inicial
+            trackBarVelocidad.Value = 20; // Velocidad inicial
             trackBarVelocidad.Scroll += TrackBarVelocidad_Scroll;
 
             // Configurar Timer

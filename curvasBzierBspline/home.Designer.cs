@@ -45,7 +45,7 @@
             this.bsplineToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(800, 30);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -56,20 +56,20 @@
             this.cuadraticaToolStripMenuItem,
             this.cubicaToolStripMenuItem});
             this.bezierToolStripMenuItem.Name = "bezierToolStripMenuItem";
-            this.bezierToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
+            this.bezierToolStripMenuItem.Size = new System.Drawing.Size(64, 26);
             this.bezierToolStripMenuItem.Text = "Bezier";
             // 
             // linealToolStripMenuItem
             // 
             this.linealToolStripMenuItem.Name = "linealToolStripMenuItem";
-            this.linealToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.linealToolStripMenuItem.Size = new System.Drawing.Size(163, 26);
             this.linealToolStripMenuItem.Text = "Lineal";
             this.linealToolStripMenuItem.Click += new System.EventHandler(this.linealToolStripMenuItem_Click);
             // 
             // cuadraticaToolStripMenuItem
             // 
             this.cuadraticaToolStripMenuItem.Name = "cuadraticaToolStripMenuItem";
-            this.cuadraticaToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.cuadraticaToolStripMenuItem.Size = new System.Drawing.Size(163, 26);
             this.cuadraticaToolStripMenuItem.Text = "Cuadratica";
             this.cuadraticaToolStripMenuItem.Click += new System.EventHandler(this.cuadraticaToolStripMenuItem_Click);
             // 
@@ -78,6 +78,7 @@
             this.cubicaToolStripMenuItem.Name = "cubicaToolStripMenuItem";
             this.cubicaToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.cubicaToolStripMenuItem.Text = "Cubica";
+            this.cubicaToolStripMenuItem.Click += new System.EventHandler(this.cubicaToolStripMenuItem_Click);
             // 
             // bsplineToolStripMenuItem
             // 
@@ -93,7 +94,8 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "home";
-            this.Text = "Form1";
+            this.Text = "Curvas";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

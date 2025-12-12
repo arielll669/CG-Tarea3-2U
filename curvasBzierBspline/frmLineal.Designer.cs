@@ -33,13 +33,13 @@
             this.trackBarT = new System.Windows.Forms.TrackBar();
             this.btnPlayPause = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
+            this.lblVelocidad = new System.Windows.Forms.Label();
+            this.trackBarVelocidad = new System.Windows.Forms.TrackBar();
             this.chkMostrarLineas = new System.Windows.Forms.CheckBox();
             this.timerAnimacion = new System.Windows.Forms.Timer(this.components);
             this.lblP1 = new System.Windows.Forms.Label();
-            this.lblVelocidad = new System.Windows.Forms.Label();
             this.lblValorT = new System.Windows.Forms.Label();
             this.lblP0 = new System.Windows.Forms.Label();
-            this.trackBarVelocidad = new System.Windows.Forms.TrackBar();
             this.lblTitulo = new System.Windows.Forms.Label();
             this.panelDibujo = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
@@ -57,7 +57,7 @@
             this.groupBox1.Controls.Add(this.chkMostrarLineas);
             this.groupBox1.Location = new System.Drawing.Point(12, 334);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(317, 271);
+            this.groupBox1.Size = new System.Drawing.Size(317, 337);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Controles";
@@ -88,6 +88,22 @@
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
             // 
+            // lblVelocidad
+            // 
+            this.lblVelocidad.AutoSize = true;
+            this.lblVelocidad.Location = new System.Drawing.Point(10, 220);
+            this.lblVelocidad.Name = "lblVelocidad";
+            this.lblVelocidad.Size = new System.Drawing.Size(89, 16);
+            this.lblVelocidad.TabIndex = 6;
+            this.lblVelocidad.Text = "Velocidad: 20";
+            // 
+            // trackBarVelocidad
+            // 
+            this.trackBarVelocidad.Location = new System.Drawing.Point(9, 260);
+            this.trackBarVelocidad.Name = "trackBarVelocidad";
+            this.trackBarVelocidad.Size = new System.Drawing.Size(302, 56);
+            this.trackBarVelocidad.TabIndex = 9;
+            // 
             // chkMostrarLineas
             // 
             this.chkMostrarLineas.AutoSize = true;
@@ -107,15 +123,6 @@
             this.lblP1.TabIndex = 5;
             this.lblP1.Text = "P1: (0, 0)";
             // 
-            // lblVelocidad
-            // 
-            this.lblVelocidad.AutoSize = true;
-            this.lblVelocidad.Location = new System.Drawing.Point(6, 224);
-            this.lblVelocidad.Name = "lblVelocidad";
-            this.lblVelocidad.Size = new System.Drawing.Size(82, 16);
-            this.lblVelocidad.TabIndex = 6;
-            this.lblVelocidad.Text = "Velocidad: 5";
-            // 
             // lblValorT
             // 
             this.lblValorT.AutoSize = true;
@@ -133,13 +140,6 @@
             this.lblP0.Size = new System.Drawing.Size(57, 16);
             this.lblP0.TabIndex = 8;
             this.lblP0.Text = "P0: (0, 0)";
-            // 
-            // trackBarVelocidad
-            // 
-            this.trackBarVelocidad.Location = new System.Drawing.Point(122, 209);
-            this.trackBarVelocidad.Name = "trackBarVelocidad";
-            this.trackBarVelocidad.Size = new System.Drawing.Size(189, 56);
-            this.trackBarVelocidad.TabIndex = 9;
             // 
             // lblTitulo
             // 

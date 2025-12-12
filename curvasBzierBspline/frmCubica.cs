@@ -5,33 +5,30 @@ using System.Windows.Forms;
 
 namespace curvasBzierBspline
 {
-    public partial class frmCuadratica : Form
+    public partial class frmCubica : Form
     {
         // --- Variables de Estado y Puntos de Control ---
 
-        // Puntos de control para la curva cuadrática (P0, P1, P2)
+        // Puntos de control para la curva cúbica (P0, P1, P2, P3)
         private clsPunto P0;
         private clsPunto P1;
         private clsPunto P2;
+        private clsPunto P3;
 
-        // Variables de Dibujo (DOBLE BUFFERING: canvas es la imagen final)
+        // Variables de Dibujo (Optimización por capas)
         private Graphics g; // Graphics del canvas principal
         private Bitmap canvas;
-
-        // Bitmap y Graphics para la capa estática (curva verde)
-        private Bitmap staticCurveBitmap;
+        private Bitmap staticCurveBitmap; // Curva verde estática
         private Graphics staticCurveGraphics;
-
-        // Bitmap y Graphics para la capa de Rastro
-        private Bitmap trailBitmap;
+        private Bitmap trailBitmap; // Rastro (marcas acumuladas)
         private Graphics trailGraphics;
 
 
         // Parámetro de la curva (de 0.0 a 1.0)
         private float t = 0.0f;
 
-        // Animación cíclica (P0 -> P2, P2 -> P0)
-        private bool direccionHaciaP2 = true;
+        // Animación cíclica (P0 -> P3, P3 -> P0)
+        private bool direccionHaciaP3 = true;
 
         // Control de arrastre
         private clsPunto puntoArrastrado = null;
@@ -42,51 +39,55 @@ namespace curvasBzierBspline
 
         // Constantes y Pinceles para dibujo
         private const int RADIO_PUNTO_CONTROL = 6;
-        private const int RADIO_PUNTO_CURVA = 3;
+        private const int RADIO_PUNTO_INTERMEDIO = 3;
         private Pen penCurva = new Pen(Color.Green, 2);
-        private Pen penPoligono = new Pen(Color.Gray, 1); // Líneas del polígono de control
-        private Pen penConstruccion = new Pen(Color.OrangeRed, 1) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dot }; // Líneas De Casteljau
+        private Pen penPoligono = new Pen(Color.Gray, 1);
+        private Pen penConstruccion1 = new Pen(Color.OrangeRed, 1) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dot }; // Nivel 1 (Q)
+        private Pen penConstruccion2 = new Pen(Color.Purple, 1) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dot };    // Nivel 2 (R)
+        private Pen penConstruccion3 = new Pen(Color.Blue, 1) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dot };       // Nivel 3 (S)
 
         private Brush brushP0 = new SolidBrush(Color.Red);
-        private Brush brushP1 = new SolidBrush(Color.Yellow); // Punto de control intermedio
-        private Brush brushP2 = new SolidBrush(Color.Blue);
+        private Brush brushP1 = new SolidBrush(Color.Orange);
+        private Brush brushP2 = new SolidBrush(Color.Purple);
+        private Brush brushP3 = new SolidBrush(Color.Blue);
         private Brush brushPuntoT = new SolidBrush(Color.Magenta); // Punto animado final
 
-        // Rastro ahora es transparente o muy suave para no tapar la curva.
         private Brush brushRastro = new SolidBrush(Color.FromArgb(100, Color.LightGray));
 
-        private static frmCuadratica instancia;
+        private static frmCubica instancia;
         private bool isPlaying = false;
-        public frmCuadratica()
+
+        public frmCubica()
         {
             InitializeComponent();
 
             int w = panelDibujo.Width;
             int h = panelDibujo.Height;
-            P0 = new clsPunto(w * 0.1f, h * 0.5f);
-            P1 = new clsPunto(w * 0.5f, h * 0.1f); // Punto de control
-            P2 = new clsPunto(w * 0.9f, h * 0.5f);
 
-            // Inicializar el canvas principal
+            // Inicialización de los 4 puntos de control
+            P0 = new clsPunto(w * 0.1f, h * 0.5f);
+            P1 = new clsPunto(w * 0.3f, h * 0.1f);
+            P2 = new clsPunto(w * 0.7f, h * 0.9f);
+            P3 = new clsPunto(w * 0.9f, h * 0.5f);
+
+            // Inicialización de Bitmaps y Graphics
             canvas = new Bitmap(w, h);
             g = Graphics.FromImage(canvas);
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             panelDibujo.BackgroundImage = canvas;
             panelDibujo.BackgroundImageLayout = ImageLayout.None;
 
-            // Inicializar el canvas estático (CURVA VERDE)
             staticCurveBitmap = new Bitmap(w, h);
             staticCurveGraphics = Graphics.FromImage(staticCurveBitmap);
             staticCurveGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-            // Inicializar el canvas de RASTRO (capa que acumula los puntos grises)
             trailBitmap = new Bitmap(w, h);
             trailGraphics = Graphics.FromImage(trailBitmap);
-            trailGraphics.Clear(Color.Transparent); // Fondo transparente
+            trailGraphics.Clear(Color.Transparent);
             trailGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
 
-            // Inicialización de TrackBars y Timer (se mantiene igual)
+            // Configuración de controles
             trackBarT.Minimum = 0;
             trackBarT.Maximum = 100;
             trackBarT.Value = 0;
@@ -111,26 +112,22 @@ namespace curvasBzierBspline
             btnReset.Click += BtnReset_Click;
             btnLimpiarRastro.Click += BtnLimpiarRastro_Click;
             chkMostrarPoligono.CheckedChanged += ChkMostrarPoligono_CheckedChanged;
-            chkMostrarConstruccion.CheckedChanged += ChkMostrarConstruccion_CheckedChanged;
-
-            // Configurar el CheckBox para mostrar rastro
-            chkDejarRastro.Text = "Mostrar Rastro";
-            // *** CORRECCIÓN: Desactivar el rastro por defecto ***
-            chkDejarRastro.Checked = false;
-            chkDejarRastro.CheckedChanged += ChkMostrarRastro_CheckedChanged;
+            chkMostrarNivel1.CheckedChanged += ChkMostrarNivel_CheckedChanged;
+            chkMostrarNivel2.CheckedChanged += ChkMostrarNivel_CheckedChanged;
+            chkMostrarNivel3.CheckedChanged += ChkMostrarNivel_CheckedChanged;
 
 
             // Estado inicial
-            DibujarCurvaEstatica(); // Dibuja la curva verde en staticCurveBitmap
+            DibujarCurvaEstatica();
             ActualizarEtiquetas();
             DibujarElementosDinamicos();
         }
 
-        public static frmCuadratica ObtenerInstancia()
+        public static frmCubica ObtenerInstancia()
         {
             if (instancia == null || instancia.IsDisposed)
             {
-                instancia = new frmCuadratica();
+                instancia = new frmCubica();
             }
             return instancia;
         }
@@ -174,7 +171,7 @@ namespace curvasBzierBspline
 
             t = 0.0f;
             trackBarT.Value = 0;
-            direccionHaciaP2 = true;
+            direccionHaciaP3 = true;
 
             // Limpia el rastro
             trailGraphics.Clear(Color.Transparent);
@@ -188,7 +185,6 @@ namespace curvasBzierBspline
         {
             // Simplemente limpia la capa de rastro
             trailGraphics.Clear(Color.Transparent);
-            DibujarCurvaEstatica();
             DibujarElementosDinamicos();
         }
 
@@ -197,20 +193,12 @@ namespace curvasBzierBspline
             DibujarElementosDinamicos();
         }
 
-        private void ChkMostrarConstruccion_CheckedChanged(object sender, EventArgs e)
+        private void ChkMostrarNivel_CheckedChanged(object sender, EventArgs e)
         {
+            // Se llama cuando cualquier checkbox de nivel cambia
             DibujarElementosDinamicos();
         }
 
-        private void ChkMostrarRastro_CheckedChanged(object sender, EventArgs e)
-        {
-            // Si desactivamos el rastro, debemos limpiar la capa del rastro inmediatamente.
-            if (!chkDejarRastro.Checked)
-            {
-                trailGraphics.Clear(Color.Transparent);
-            }
-            DibujarElementosDinamicos();
-        }
 
         // --- Lógica de Animación (Cíclica) ---
 
@@ -218,13 +206,13 @@ namespace curvasBzierBspline
         {
             float incremento = 0.01f * (float)trackBarVelocidad.Value / 5.0f;
 
-            if (direccionHaciaP2)
+            if (direccionHaciaP3)
             {
                 t += incremento;
                 if (t >= 1.0f)
                 {
                     t = 1.0f;
-                    direccionHaciaP2 = false;
+                    direccionHaciaP3 = false; // Cambia la dirección: P3 -> P0
                 }
             }
             else // Dirección hacia P0
@@ -233,7 +221,7 @@ namespace curvasBzierBspline
                 if (t <= 0.0f)
                 {
                     t = 0.0f;
-                    direccionHaciaP2 = true;
+                    direccionHaciaP3 = true; // Cambia la dirección: P0 -> P3
                 }
             }
 
@@ -246,18 +234,17 @@ namespace curvasBzierBspline
         // --- MÉTODOS DE DIBUJO OPTIMIZADOS ---
 
         /// <summary>
-        /// Dibuja el fondo y la curva verde completa en la capa estática (staticCurveBitmap).
+        /// Dibuja el fondo y la curva verde completa en la capa estática.
+        /// Se llama solo cuando la forma de la curva cambia (arrastre o reset).
         /// </summary>
         private void DibujarCurvaEstatica()
         {
-            // 1. Limpiar el canvas estático (solo la curva verde)
             staticCurveGraphics.Clear(panelDibujo.BackColor);
 
-            // 2. Trazar la curva completa (¡SOLO AQUÍ!)
             clsPunto puntoAnterior = P0;
             for (float i = 0.0f; i <= 1.0f; i += 0.01f)
             {
-                clsPunto puntoCurva = clsCurvaBezier.CalcularPuntoCuadratico(P0, P1, P2, i);
+                clsPunto puntoCurva = clsCurvaBezier.CalcularPuntoCubico(P0, P1, P2, P3, i);
                 staticCurveGraphics.DrawLine(penCurva, puntoAnterior.ToPoint(), puntoCurva.ToPoint());
                 puntoAnterior = puntoCurva;
             }
@@ -275,48 +262,85 @@ namespace curvasBzierBspline
             g.DrawImage(staticCurveBitmap, 0, 0);
 
             // 3. Dibujar la capa de Rastro acumulado (si existe).
-            // Esto asegura que la curva verde no se vea interrumpida por el rastro.
             g.DrawImage(trailBitmap, 0, 0);
 
             // --- Lógica de Animación / De Casteljau (Cálculo) ---
+
+            // Nivel 1 (Interpolación Lineal: Px -> Px+1)
             clsPunto Q0 = clsCurvaBezier.CalcularPuntoLineal(P0, P1, t);
             clsPunto Q1 = clsCurvaBezier.CalcularPuntoLineal(P1, P2, t);
-            clsPunto puntoAnimado = clsCurvaBezier.CalcularPuntoLineal(Q0, Q1, t);
+            clsPunto Q2 = clsCurvaBezier.CalcularPuntoLineal(P2, P3, t);
 
-            // 4. Dibujar el polígono de control (si está activo)
+            // Nivel 2 (Interpolación Lineal: Qx -> Qx+1)
+            clsPunto R0 = clsCurvaBezier.CalcularPuntoLineal(Q0, Q1, t);
+            clsPunto R1 = clsCurvaBezier.CalcularPuntoLineal(Q1, Q2, t);
+
+            // Nivel 3 (Interpolación Lineal: Rx -> Rx+1)
+            clsPunto puntoAnimado = clsCurvaBezier.CalcularPuntoLineal(R0, R1, t); // S0 = P(t)
+
+            // 4. Dibujar el polígono de control (P0-P3)
             if (chkMostrarPoligono.Checked)
             {
                 g.DrawLine(penPoligono, P0.ToPoint(), P1.ToPoint());
                 g.DrawLine(penPoligono, P1.ToPoint(), P2.ToPoint());
+                g.DrawLine(penPoligono, P2.ToPoint(), P3.ToPoint());
             }
 
-            // 5. Dibujar las líneas de construcción (De Casteljau)
-            if (chkMostrarConstruccion.Checked)
-            {
-                g.DrawLine(penConstruccion, Q0.ToPoint(), Q1.ToPoint());
+            // 5. Dibujar las líneas de Construcción De Casteljau
 
-                g.FillEllipse(Brushes.Gray, Q0.X - RADIO_PUNTO_CURVA, Q0.Y - RADIO_PUNTO_CURVA, RADIO_PUNTO_CURVA * 2, RADIO_PUNTO_CURVA * 2);
-                g.FillEllipse(Brushes.Gray, Q1.X - RADIO_PUNTO_CURVA, Q1.Y - RADIO_PUNTO_CURVA, RADIO_PUNTO_CURVA * 2, RADIO_PUNTO_CURVA * 2);
+            // Nivel 1 (Líneas Q0-Q1, Q1-Q2)
+            if (chkMostrarNivel1.Checked)
+            {
+                g.DrawLine(penConstruccion1, Q0.ToPoint(), Q1.ToPoint());
+                g.DrawLine(penConstruccion1, Q1.ToPoint(), Q2.ToPoint());
+                DibujarPuntoIntermedio(Q0, Brushes.Orange, g);
+                DibujarPuntoIntermedio(Q1, Brushes.Orange, g);
+                DibujarPuntoIntermedio(Q2, Brushes.Orange, g);
             }
 
-            // 6. Dibujar el rastro (solo si el checkbox está activo y estamos en animación)
-            if (chkDejarRastro.Checked && isPlaying)
+            // Nivel 2 (Línea R0-R1)
+            if (chkMostrarNivel2.Checked)
             {
-                // Dibuja el punto en la capa de RASTRO para que se acumule.
+                g.DrawLine(penConstruccion2, R0.ToPoint(), R1.ToPoint());
+                DibujarPuntoIntermedio(R0, Brushes.Purple, g);
+                DibujarPuntoIntermedio(R1, Brushes.Purple, g);
+            }
+
+            // Nivel 3 (Punto final S0 = P(t)) - Se dibuja con el punto animado.
+            if (chkMostrarNivel3.Checked)
+            {
+                // La línea entre R0 y R1, cuyo punto final es P(t) (S0), ya se dibujó en Nivel 2.
+                // Aquí solo dibujamos el punto final (aunque es lo mismo que el punto animado Magenta)
+                // Usamos un color distinto para S0 si está activo el Nivel 3, sino se usará el Magenta (Punto Animado)
+                g.FillEllipse(Brushes.Blue, puntoAnimado.X - RADIO_PUNTO_INTERMEDIO, puntoAnimado.Y - RADIO_PUNTO_INTERMEDIO,
+                              RADIO_PUNTO_INTERMEDIO * 2, RADIO_PUNTO_INTERMEDIO * 2);
+            }
+
+
+            // 6. Dibujar el rastro (si está activo y en modo animación)
+            if (chkMostrarNivel3.Checked && isPlaying) // Usamos Nivel3 como proxy para "Mostrar Rastro" si no hay checkbox dedicado
+            {
                 trailGraphics.FillEllipse(brushRastro, puntoAnimado.X - 1, puntoAnimado.Y - 1, 2, 2);
             }
 
-            // 7. Dibujar el punto animado P(t) (siempre visible)
-            g.FillEllipse(brushPuntoT, puntoAnimado.X - RADIO_PUNTO_CURVA, puntoAnimado.Y - RADIO_PUNTO_CURVA,
-                          RADIO_PUNTO_CURVA * 2, RADIO_PUNTO_CURVA * 2);
+            // 7. Dibujar el punto animado P(t) (siempre visible, color magenta)
+            g.FillEllipse(brushPuntoT, puntoAnimado.X - RADIO_PUNTO_INTERMEDIO, puntoAnimado.Y - RADIO_PUNTO_INTERMEDIO,
+                          RADIO_PUNTO_INTERMEDIO * 2, RADIO_PUNTO_INTERMEDIO * 2);
 
             // 8. Dibujar los puntos de control (al final)
             DibujarPuntoControl(P0, brushP0, "P0");
             DibujarPuntoControl(P1, brushP1, "P1");
             DibujarPuntoControl(P2, brushP2, "P2");
+            DibujarPuntoControl(P3, brushP3, "P3");
 
             // Refrescar el Panel
             panelDibujo.Invalidate();
+        }
+
+        private void DibujarPuntoIntermedio(clsPunto p, Brush brush, Graphics gr)
+        {
+            gr.FillEllipse(brush, p.X - RADIO_PUNTO_INTERMEDIO, p.Y - RADIO_PUNTO_INTERMEDIO,
+                         RADIO_PUNTO_INTERMEDIO * 2, RADIO_PUNTO_INTERMEDIO * 2);
         }
 
         private void DibujarPuntoControl(clsPunto p, Brush brush, string etiqueta)
@@ -334,6 +358,7 @@ namespace curvasBzierBspline
             lblP0.Text = $"({P0.X:F0}, {P0.Y:F0})";
             lblP1.Text = $"({P1.X:F0}, {P1.Y:F0})";
             lblP2.Text = $"({P2.X:F0}, {P2.Y:F0})";
+            lblP3.Text = $"({P3.X:F0}, {P3.Y:F0})";
             lblValorT.Text = $"{t:F2}";
         }
 
@@ -354,6 +379,10 @@ namespace curvasBzierBspline
                 else if (Distancia(e.Location, P2.ToPoint()) < RADIO_PUNTO_CONTROL * 2)
                 {
                     puntoArrastrado = P2;
+                }
+                else if (Distancia(e.Location, P3.ToPoint()) < RADIO_PUNTO_CONTROL * 2)
+                {
+                    puntoArrastrado = P3;
                 }
 
                 if (puntoArrastrado != null)
@@ -378,10 +407,13 @@ namespace curvasBzierBspline
 
                 if (!throttledUpdate)
                 {
+                    // Al mover, actualizamos la curva estática para reflejar la nueva forma
                     DibujarCurvaEstatica();
+                    // Y dibujamos los elementos dinámicos (manteniendo la animación)
                     DibujarElementosDinamicos();
 
                     throttledUpdate = true;
+                    // Simulación de Throttling (Task.Delay)
                     Task.Delay(10).ContinueWith(t => { throttledUpdate = false; }, TaskScheduler.FromCurrentSynchronizationContext());
                 }
             }
@@ -390,8 +422,11 @@ namespace curvasBzierBspline
         private void PanelDibujo_MouseUp(object sender, MouseEventArgs e)
         {
             puntoArrastrado = null;
+            // Redibujo final para asegurar la precisión
             DibujarCurvaEstatica();
             DibujarElementosDinamicos();
+            // Limpiamos el rastro por si acaso, ya que el arrastre puede haberlo ensuciado un poco
+            trailGraphics.Clear(Color.Transparent);
             throttledUpdate = false;
         }
 

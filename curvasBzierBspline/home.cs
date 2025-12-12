@@ -39,5 +39,11 @@ namespace curvasBzierBspline
             frmCuadratica form2 = frmCuadratica.ObtenerInstancia();
             ShowSingletonForm(form2);
         }
+
+        private void cubicaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCubica form3 = frmCubica.ObtenerInstancia();
+            ShowSingletonForm(form3);
+        }
     }
 }
