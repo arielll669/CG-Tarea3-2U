@@ -30,10 +30,10 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.bezierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bsplineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.linealToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cuadraticaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cubicaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bsplineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,12 +59,6 @@
             this.bezierToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
             this.bezierToolStripMenuItem.Text = "Bezier";
             // 
-            // bsplineToolStripMenuItem
-            // 
-            this.bsplineToolStripMenuItem.Name = "bsplineToolStripMenuItem";
-            this.bsplineToolStripMenuItem.Size = new System.Drawing.Size(77, 24);
-            this.bsplineToolStripMenuItem.Text = "B-spline";
-            // 
             // linealToolStripMenuItem
             // 
             this.linealToolStripMenuItem.Name = "linealToolStripMenuItem";
@@ -77,6 +71,7 @@
             this.cuadraticaToolStripMenuItem.Name = "cuadraticaToolStripMenuItem";
             this.cuadraticaToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.cuadraticaToolStripMenuItem.Text = "Cuadratica";
+            this.cuadraticaToolStripMenuItem.Click += new System.EventHandler(this.cuadraticaToolStripMenuItem_Click);
             // 
             // cubicaToolStripMenuItem
             // 
@@ -84,14 +79,20 @@
             this.cubicaToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.cubicaToolStripMenuItem.Text = "Cubica";
             // 
-            // Form1
+            // bsplineToolStripMenuItem
+            // 
+            this.bsplineToolStripMenuItem.Name = "bsplineToolStripMenuItem";
+            this.bsplineToolStripMenuItem.Size = new System.Drawing.Size(77, 24);
+            this.bsplineToolStripMenuItem.Text = "B-spline";
+            // 
+            // home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "home";
             this.Text = "Form1";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
