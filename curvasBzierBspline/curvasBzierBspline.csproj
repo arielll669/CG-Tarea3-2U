@@ -46,8 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="lineal\cPunto.cs" />
-    <Compile Include="lineal\cLineal.cs" />
+    <Compile Include="lineal\clsCurvaBezier.cs" />
+    <Compile Include="lineal\clsPunto.cs" />
     <Compile Include="frmLineal.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -30,149 +30,150 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.trackBar2 = new System.Windows.Forms.TrackBar();
-            this.label5 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.trackBarT = new System.Windows.Forms.TrackBar();
+            this.btnPlayPause = new System.Windows.Forms.Button();
+            this.btnReset = new System.Windows.Forms.Button();
+            this.chkMostrarLineas = new System.Windows.Forms.CheckBox();
+            this.timerAnimacion = new System.Windows.Forms.Timer(this.components);
+            this.lblP1 = new System.Windows.Forms.Label();
+            this.lblVelocidad = new System.Windows.Forms.Label();
+            this.lblValorT = new System.Windows.Forms.Label();
+            this.lblP0 = new System.Windows.Forms.Label();
+            this.trackBarVelocidad = new System.Windows.Forms.TrackBar();
+            this.lblTitulo = new System.Windows.Forms.Label();
+            this.panelDibujo = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarT)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarVelocidad)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.trackBar1);
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.button2);
-            this.groupBox1.Controls.Add(this.checkBox1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 178);
+            this.groupBox1.Controls.Add(this.trackBarT);
+            this.groupBox1.Controls.Add(this.btnPlayPause);
+            this.groupBox1.Controls.Add(this.btnReset);
+            this.groupBox1.Controls.Add(this.lblVelocidad);
+            this.groupBox1.Controls.Add(this.trackBarVelocidad);
+            this.groupBox1.Controls.Add(this.chkMostrarLineas);
+            this.groupBox1.Location = new System.Drawing.Point(12, 334);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(317, 271);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.groupBox1.Text = "Controles";
             // 
-            // trackBar1
+            // trackBarT
             // 
-            this.trackBar1.Location = new System.Drawing.Point(6, 54);
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(305, 56);
-            this.trackBar1.TabIndex = 0;
+            this.trackBarT.Location = new System.Drawing.Point(6, 54);
+            this.trackBarT.Name = "trackBarT";
+            this.trackBarT.Size = new System.Drawing.Size(305, 56);
+            this.trackBarT.TabIndex = 0;
             // 
-            // button1
+            // btnPlayPause
             // 
-            this.button1.Location = new System.Drawing.Point(55, 116);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnPlayPause.Location = new System.Drawing.Point(9, 116);
+            this.btnPlayPause.Name = "btnPlayPause";
+            this.btnPlayPause.Size = new System.Drawing.Size(75, 23);
+            this.btnPlayPause.TabIndex = 2;
+            this.btnPlayPause.Text = "Play";
+            this.btnPlayPause.UseVisualStyleBackColor = true;
+            this.btnPlayPause.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // btnReset
             // 
-            this.button2.Location = new System.Drawing.Point(180, 116);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnReset.Location = new System.Drawing.Point(180, 116);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(75, 23);
+            this.btnReset.TabIndex = 3;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // chkMostrarLineas
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(9, 172);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(95, 20);
-            this.checkBox1.TabIndex = 4;
-            this.checkBox1.Text = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.chkMostrarLineas.AutoSize = true;
+            this.chkMostrarLineas.Location = new System.Drawing.Point(9, 172);
+            this.chkMostrarLineas.Name = "chkMostrarLineas";
+            this.chkMostrarLineas.Size = new System.Drawing.Size(173, 20);
+            this.chkMostrarLineas.TabIndex = 4;
+            this.chkMostrarLineas.Text = "Mostrar líneas auxiliares";
+            this.chkMostrarLineas.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // lblP1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(778, 80);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 16);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "label1";
+            this.lblP1.AutoSize = true;
+            this.lblP1.Location = new System.Drawing.Point(273, 235);
+            this.lblP1.Name = "lblP1";
+            this.lblP1.Size = new System.Drawing.Size(57, 16);
+            this.lblP1.TabIndex = 5;
+            this.lblP1.Text = "P1: (0, 0)";
             // 
-            // label2
+            // lblVelocidad
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(887, 80);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 16);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "label2";
+            this.lblVelocidad.AutoSize = true;
+            this.lblVelocidad.Location = new System.Drawing.Point(6, 224);
+            this.lblVelocidad.Name = "lblVelocidad";
+            this.lblVelocidad.Size = new System.Drawing.Size(82, 16);
+            this.lblVelocidad.TabIndex = 6;
+            this.lblVelocidad.Text = "Velocidad: 5";
             // 
-            // label3
+            // lblValorT
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(778, 31);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(44, 16);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "label3";
+            this.lblValorT.AutoSize = true;
+            this.lblValorT.Location = new System.Drawing.Point(273, 273);
+            this.lblValorT.Name = "lblValorT";
+            this.lblValorT.Size = new System.Drawing.Size(31, 16);
+            this.lblValorT.TabIndex = 7;
+            this.lblValorT.Text = "0.00";
             // 
-            // label4
+            // lblP0
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(887, 31);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(44, 16);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "label4";
+            this.lblP0.AutoSize = true;
+            this.lblP0.Location = new System.Drawing.Point(22, 235);
+            this.lblP0.Name = "lblP0";
+            this.lblP0.Size = new System.Drawing.Size(57, 16);
+            this.lblP0.TabIndex = 8;
+            this.lblP0.Text = "P0: (0, 0)";
             // 
-            // trackBar2
+            // trackBarVelocidad
             // 
-            this.trackBar2.Location = new System.Drawing.Point(12, 69);
-            this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Size = new System.Drawing.Size(104, 56);
-            this.trackBar2.TabIndex = 9;
+            this.trackBarVelocidad.Location = new System.Drawing.Point(122, 209);
+            this.trackBarVelocidad.Name = "trackBarVelocidad";
+            this.trackBarVelocidad.Size = new System.Drawing.Size(189, 56);
+            this.trackBarVelocidad.TabIndex = 9;
             // 
-            // label5
+            // lblTitulo
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(31, 31);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(44, 16);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "label5";
+            this.lblTitulo.AutoSize = true;
+            this.lblTitulo.Location = new System.Drawing.Point(22, 273);
+            this.lblTitulo.Name = "lblTitulo";
+            this.lblTitulo.Size = new System.Drawing.Size(67, 16);
+            this.lblTitulo.TabIndex = 10;
+            this.lblTitulo.Text = "Valor de t:";
             // 
-            // panel2
+            // panelDibujo
             // 
-            this.panel2.Location = new System.Drawing.Point(362, 178);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(779, 493);
-            this.panel2.TabIndex = 11;
+            this.panelDibujo.Location = new System.Drawing.Point(359, 132);
+            this.panelDibujo.Name = "panelDibujo";
+            this.panelDibujo.Size = new System.Drawing.Size(779, 493);
+            this.panelDibujo.TabIndex = 11;
             // 
             // frmLineal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1210, 693);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.trackBar2);
-            this.Controls.Add(this.label4);
+            this.ClientSize = new System.Drawing.Size(1210, 857);
+            this.Controls.Add(this.lblP1);
+            this.Controls.Add(this.panelDibujo);
+            this.Controls.Add(this.lblValorT);
+            this.Controls.Add(this.lblTitulo);
+            this.Controls.Add(this.lblP0);
             this.Controls.Add(this.groupBox1);
             this.Name = "frmLineal";
             this.Text = "frmLineal";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarT)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarVelocidad)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -180,17 +181,17 @@
 
         #endregion
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TrackBar trackBar2;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.TrackBar trackBarT;
+        private System.Windows.Forms.Timer timerAnimacion;
+        private System.Windows.Forms.Button btnPlayPause;
+        private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.CheckBox chkMostrarLineas;
+        private System.Windows.Forms.Label lblP1;
+        private System.Windows.Forms.Label lblVelocidad;
+        private System.Windows.Forms.Label lblValorT;
+        private System.Windows.Forms.Label lblP0;
+        private System.Windows.Forms.TrackBar trackBarVelocidad;
+        private System.Windows.Forms.Label lblTitulo;
+        private System.Windows.Forms.Panel panelDibujo;
     }
 }
