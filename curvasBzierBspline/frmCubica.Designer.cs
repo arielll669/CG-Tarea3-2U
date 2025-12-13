@@ -53,6 +53,7 @@
             this.chkMostrarNivel3 = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarT)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVelocidad)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -61,9 +62,9 @@
             // 
             // panelDibujo
             // 
-            this.panelDibujo.Location = new System.Drawing.Point(414, 107);
+            this.panelDibujo.Location = new System.Drawing.Point(414, 26);
             this.panelDibujo.Name = "panelDibujo";
-            this.panelDibujo.Size = new System.Drawing.Size(1039, 681);
+            this.panelDibujo.Size = new System.Drawing.Size(1039, 762);
             this.panelDibujo.TabIndex = 0;
             // 
             // trackBarT
@@ -287,6 +288,15 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Opciones de Visualización";
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Location = new System.Drawing.Point(29, 78);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(307, 239);
+            this.groupBox3.TabIndex = 23;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Coordenadas";
+            // 
             // frmCubica
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -305,6 +315,7 @@
             this.Controls.Add(this.lblP0);
             this.Controls.Add(this.lblTituloP0);
             this.Controls.Add(this.panelDibujo);
+            this.Controls.Add(this.groupBox3);
             this.Name = "frmCubica";
             this.Text = "frmCubica";
             ((System.ComponentModel.ISupportInitialize)(this.trackBarT)).EndInit();
@@ -344,5 +355,6 @@
         private System.Windows.Forms.CheckBox chkMostrarNivel3;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBox3;
     }
 }

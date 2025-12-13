@@ -55,9 +55,9 @@
             this.groupBox1.Controls.Add(this.lblVelocidad);
             this.groupBox1.Controls.Add(this.trackBarVelocidad);
             this.groupBox1.Controls.Add(this.chkMostrarLineas);
-            this.groupBox1.Location = new System.Drawing.Point(12, 334);
+            this.groupBox1.Location = new System.Drawing.Point(23, 222);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(317, 337);
+            this.groupBox1.Size = new System.Drawing.Size(313, 337);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Controles";
@@ -117,7 +117,7 @@
             // lblP1
             // 
             this.lblP1.AutoSize = true;
-            this.lblP1.Location = new System.Drawing.Point(273, 235);
+            this.lblP1.Location = new System.Drawing.Point(31, 151);
             this.lblP1.Name = "lblP1";
             this.lblP1.Size = new System.Drawing.Size(57, 16);
             this.lblP1.TabIndex = 5;
@@ -126,7 +126,7 @@
             // lblValorT
             // 
             this.lblValorT.AutoSize = true;
-            this.lblValorT.Location = new System.Drawing.Point(273, 273);
+            this.lblValorT.Location = new System.Drawing.Point(114, 179);
             this.lblValorT.Name = "lblValorT";
             this.lblValorT.Size = new System.Drawing.Size(31, 16);
             this.lblValorT.TabIndex = 7;
@@ -135,7 +135,7 @@
             // lblP0
             // 
             this.lblP0.AutoSize = true;
-            this.lblP0.Location = new System.Drawing.Point(22, 235);
+            this.lblP0.Location = new System.Drawing.Point(31, 120);
             this.lblP0.Name = "lblP0";
             this.lblP0.Size = new System.Drawing.Size(57, 16);
             this.lblP0.TabIndex = 8;
@@ -144,7 +144,7 @@
             // lblTitulo
             // 
             this.lblTitulo.AutoSize = true;
-            this.lblTitulo.Location = new System.Drawing.Point(22, 273);
+            this.lblTitulo.Location = new System.Drawing.Point(29, 179);
             this.lblTitulo.Name = "lblTitulo";
             this.lblTitulo.Size = new System.Drawing.Size(67, 16);
             this.lblTitulo.TabIndex = 10;
@@ -152,9 +152,9 @@
             // 
             // panelDibujo
             // 
-            this.panelDibujo.Location = new System.Drawing.Point(359, 132);
+            this.panelDibujo.Location = new System.Drawing.Point(359, 109);
             this.panelDibujo.Name = "panelDibujo";
-            this.panelDibujo.Size = new System.Drawing.Size(779, 493);
+            this.panelDibujo.Size = new System.Drawing.Size(808, 516);
             this.panelDibujo.TabIndex = 11;
             // 
             // frmLineal

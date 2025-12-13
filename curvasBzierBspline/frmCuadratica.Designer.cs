@@ -60,9 +60,9 @@
             // 
             // panelDibujo
             // 
-            this.panelDibujo.Location = new System.Drawing.Point(423, 235);
+            this.panelDibujo.Location = new System.Drawing.Point(402, 148);
             this.panelDibujo.Name = "panelDibujo";
-            this.panelDibujo.Size = new System.Drawing.Size(726, 427);
+            this.panelDibujo.Size = new System.Drawing.Size(836, 514);
             this.panelDibujo.TabIndex = 0;
             // 
             // btnLimpiarRastro
@@ -82,7 +82,7 @@
             this.groupBox1.Controls.Add(this.btnPlayPause);
             this.groupBox1.Controls.Add(this.trackBarT);
             this.groupBox1.Controls.Add(this.btnReset);
-            this.groupBox1.Location = new System.Drawing.Point(56, 132);
+            this.groupBox1.Location = new System.Drawing.Point(30, 148);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(324, 240);
             this.groupBox1.TabIndex = 1;
@@ -135,7 +135,7 @@
             this.groupBox2.Controls.Add(this.chkMostrarPoligono);
             this.groupBox2.Controls.Add(this.chkMostrarConstruccion);
             this.groupBox2.Controls.Add(this.chkDejarRastro);
-            this.groupBox2.Location = new System.Drawing.Point(8, 404);
+            this.groupBox2.Location = new System.Drawing.Point(30, 412);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(324, 154);
             this.groupBox2.TabIndex = 2;
@@ -186,9 +186,9 @@
             this.panelInfo.Controls.Add(this.lblTituloP2);
             this.panelInfo.Controls.Add(this.lblTituloT);
             this.panelInfo.Controls.Add(this.lblP2);
-            this.panelInfo.Location = new System.Drawing.Point(56, 26);
+            this.panelInfo.Location = new System.Drawing.Point(36, 12);
             this.panelInfo.Name = "panelInfo";
-            this.panelInfo.Size = new System.Drawing.Size(1182, 100);
+            this.panelInfo.Size = new System.Drawing.Size(1202, 115);
             this.panelInfo.TabIndex = 3;
             // 
             // lblTituloP0
@@ -213,7 +213,7 @@
             // lblTituloP1
             // 
             this.lblTituloP1.AutoSize = true;
-            this.lblTituloP1.Location = new System.Drawing.Point(209, 18);
+            this.lblTituloP1.Location = new System.Drawing.Point(27, 49);
             this.lblTituloP1.Name = "lblTituloP1";
             this.lblTituloP1.Size = new System.Drawing.Size(26, 16);
             this.lblTituloP1.TabIndex = 10;
@@ -223,7 +223,7 @@
             // 
             this.lblP1.AutoSize = true;
             this.lblP1.ForeColor = System.Drawing.Color.Orange;
-            this.lblP1.Location = new System.Drawing.Point(241, 18);
+            this.lblP1.Location = new System.Drawing.Point(59, 49);
             this.lblP1.Name = "lblP1";
             this.lblP1.Size = new System.Drawing.Size(35, 16);
             this.lblP1.TabIndex = 11;
@@ -233,7 +233,7 @@
             // 
             this.lblValorT.AutoSize = true;
             this.lblValorT.ForeColor = System.Drawing.Color.Blue;
-            this.lblValorT.Location = new System.Drawing.Point(116, 66);
+            this.lblValorT.Location = new System.Drawing.Point(219, 18);
             this.lblValorT.Name = "lblValorT";
             this.lblValorT.Size = new System.Drawing.Size(31, 16);
             this.lblValorT.TabIndex = 15;
@@ -242,7 +242,7 @@
             // lblTituloP2
             // 
             this.lblTituloP2.AutoSize = true;
-            this.lblTituloP2.Location = new System.Drawing.Point(417, 18);
+            this.lblTituloP2.Location = new System.Drawing.Point(27, 78);
             this.lblTituloP2.Name = "lblTituloP2";
             this.lblTituloP2.Size = new System.Drawing.Size(26, 16);
             this.lblTituloP2.TabIndex = 12;
@@ -251,7 +251,7 @@
             // lblTituloT
             // 
             this.lblTituloT.AutoSize = true;
-            this.lblTituloT.Location = new System.Drawing.Point(27, 66);
+            this.lblTituloT.Location = new System.Drawing.Point(146, 18);
             this.lblTituloT.Name = "lblTituloT";
             this.lblTituloT.Size = new System.Drawing.Size(67, 16);
             this.lblTituloT.TabIndex = 14;
@@ -261,7 +261,7 @@
             // 
             this.lblP2.AutoSize = true;
             this.lblP2.ForeColor = System.Drawing.Color.Blue;
-            this.lblP2.Location = new System.Drawing.Point(449, 18);
+            this.lblP2.Location = new System.Drawing.Point(59, 78);
             this.lblP2.Name = "lblP2";
             this.lblP2.Size = new System.Drawing.Size(35, 16);
             this.lblP2.TabIndex = 13;
@@ -271,7 +271,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1282, 662);
+            this.ClientSize = new System.Drawing.Size(1282, 717);
             this.Controls.Add(this.panelInfo);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);

@@ -58,6 +58,12 @@
     <Compile Include="frmCubica.Designer.cs">
       <DependentUpon>frmCubica.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmGradoN.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGradoN.Designer.cs">
+      <DependentUpon>frmGradoN.cs</DependentUpon>
+    </Compile>
     <Compile Include="lineal\clsCurvaBezier.cs" />
     <Compile Include="lineal\clsPunto.cs" />
     <Compile Include="frmLineal.cs">
@@ -79,6 +85,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmCubica.resx">
       <DependentUpon>frmCubica.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGradoN.resx">
+      <DependentUpon>frmGradoN.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmLineal.resx">
       <DependentUpon>frmLineal.cs</DependentUpon>
