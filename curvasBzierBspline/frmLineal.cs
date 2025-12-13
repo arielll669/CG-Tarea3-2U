@@ -17,13 +17,16 @@ namespace curvasBzierBspline
         // Parámetro de la curva (de 0.0 a 1.0)
         private float t = 0.0f;
 
-        // **NUEVA VARIABLE:** Indica la dirección del movimiento: true (P0 -> P1), false (P1 -> P0)
+        // Indica la dirección del movimiento: true (P0 -> P1), false (P1 -> P0)
         private bool direccionHaciaP1 = true;
 
         // Estado de control
         private bool isPlaying = false;
         private clsPunto puntoArrastrado = null;
         private Point offsetArrastre;
+
+        // Banderas de fluidez
+        private bool isDragging = false;
 
         // Constantes para dibujo
         private const int RADIO_PUNTO_CONTROL = 6;
@@ -35,6 +38,7 @@ namespace curvasBzierBspline
         private Brush brushPuntoT = new SolidBrush(Color.Orange);
 
         private static frmLineal instancia;
+
         public frmLineal()
         {
             InitializeComponent();
@@ -43,7 +47,12 @@ namespace curvasBzierBspline
             P0 = new clsPunto(50, panelDibujo.Height / 2);
             P1 = new clsPunto(panelDibujo.Width - 50, panelDibujo.Height / 2);
 
-            // Inicializar el canvas de dibujo (doble buffer para evitar parpadeos)
+            // Activar doble buffer en el panel para eliminar parpadeo
+            panelDibujo.GetType().GetProperty("DoubleBuffered",
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                .SetValue(panelDibujo, true, null);
+
+            // Inicializar el canvas de dibujo
             canvas = new Bitmap(panelDibujo.Width, panelDibujo.Height);
             g = Graphics.FromImage(canvas);
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -92,6 +101,7 @@ namespace curvasBzierBspline
             }
             return instancia;
         }
+
         // --- Manejo de Eventos de Interfaz ---
 
         private void TrackBarT_Scroll(object sender, EventArgs e)
@@ -195,8 +205,8 @@ namespace curvasBzierBspline
                 puntoAnterior = puntoCurva;
             }
 
-            // 3. Dibujar las líneas auxiliares (si el checkbox está marcado)
-            if (chkMostrarLineas.Checked)
+            // 3. Dibujar las líneas auxiliares (si el checkbox está marcado o arrastrando)
+            if (chkMostrarLineas.Checked || isDragging)
             {
                 // Línea que conecta P0 y P1
                 g.DrawLine(penLineaAux, P0.ToPoint(), P1.ToPoint());
@@ -217,8 +227,8 @@ namespace curvasBzierBspline
             DibujarPuntoControl(P0, brushP0);
             DibujarPuntoControl(P1, brushP1);
 
-            // Refrescar el Panel para mostrar el nuevo dibujo
-            panelDibujo.Invalidate();
+            // Usar Refresh para actualización inmediata
+            panelDibujo.Refresh();
         }
 
         private void DibujarPuntoControl(clsPunto p, Brush brush)
@@ -252,12 +262,14 @@ namespace curvasBzierBspline
                 {
                     puntoArrastrado = P0;
                     offsetArrastre = new Point((int)P0.X - e.X, (int)P0.Y - e.Y);
+                    isDragging = true;
                 }
                 // Verifica si el clic está cerca de P1
                 else if (Distancia(e.Location, P1.ToPoint()) < RADIO_PUNTO_CONTROL * 2)
                 {
                     puntoArrastrado = P1;
                     offsetArrastre = new Point((int)P1.X - e.X, (int)P1.Y - e.Y);
+                    isDragging = true;
                 }
             }
         }
@@ -284,6 +296,8 @@ namespace curvasBzierBspline
         {
             // Deja de arrastrar
             puntoArrastrado = null;
+            isDragging = false;
+            DibujarCurva();
         }
 
         private float Distancia(Point p1, Point p2)

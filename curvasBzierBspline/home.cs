@@ -45,5 +45,11 @@ namespace curvasBzierBspline
             frmCubica form3 = frmCubica.ObtenerInstancia();
             ShowSingletonForm(form3);
         }
+
+        private void gradoNToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmGradoN form4 = frmGradoN.ObtenerInstancia();
+            ShowSingletonForm(form4);
+        }
     }
 }

@@ -37,8 +37,9 @@ namespace curvasBzierBspline
         private clsPunto puntoArrastrado = null;
         private Point offsetArrastre;
 
-        // Bandera de optimización (THROTTLING) de dibujo al arrastrar
-        private bool throttledUpdate = false;
+        // Banderas de fluidez
+        private bool isDragging = false;
+        private bool needsFullRedraw = false;
 
         // Constantes y Pinceles para dibujo
         private const int RADIO_PUNTO_CONTROL = 6;
@@ -57,6 +58,7 @@ namespace curvasBzierBspline
 
         private static frmCuadratica instancia;
         private bool isPlaying = false;
+
         public frmCuadratica()
         {
             InitializeComponent();
@@ -66,6 +68,11 @@ namespace curvasBzierBspline
             P0 = new clsPunto(w * 0.1f, h * 0.5f);
             P1 = new clsPunto(w * 0.5f, h * 0.1f); // Punto de control
             P2 = new clsPunto(w * 0.9f, h * 0.5f);
+
+            // Activar doble buffer en el panel para eliminar parpadeo
+            panelDibujo.GetType().GetProperty("DoubleBuffered",
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                .SetValue(panelDibujo, true, null);
 
             // Inicializar el canvas principal
             canvas = new Bitmap(w, h);
@@ -115,7 +122,6 @@ namespace curvasBzierBspline
 
             // Configurar el CheckBox para mostrar rastro
             chkDejarRastro.Text = "Mostrar Rastro";
-            // *** CORRECCIÓN: Desactivar el rastro por defecto ***
             chkDejarRastro.Checked = false;
             chkDejarRastro.CheckedChanged += ChkMostrarRastro_CheckedChanged;
 
@@ -240,6 +246,14 @@ namespace curvasBzierBspline
             trackBarT.Value = Math.Max(0, Math.Min(100, (int)(t * 100)));
 
             ActualizarEtiquetas();
+
+            // Si hay un redibujado completo pendiente y no estamos arrastrando
+            if (needsFullRedraw && !isDragging)
+            {
+                DibujarCurvaEstatica();
+                needsFullRedraw = false;
+            }
+
             DibujarElementosDinamicos();
         }
 
@@ -248,14 +262,14 @@ namespace curvasBzierBspline
         /// <summary>
         /// Dibuja el fondo y la curva verde completa en la capa estática (staticCurveBitmap).
         /// </summary>
-        private void DibujarCurvaEstatica()
+        private void DibujarCurvaEstatica(float paso = 0.01f)
         {
             // 1. Limpiar el canvas estático (solo la curva verde)
             staticCurveGraphics.Clear(panelDibujo.BackColor);
 
-            // 2. Trazar la curva completa (¡SOLO AQUÍ!)
+            // 2. Trazar la curva completa
             clsPunto puntoAnterior = P0;
-            for (float i = 0.0f; i <= 1.0f; i += 0.01f)
+            for (float i = 0.0f; i <= 1.0f; i += paso)
             {
                 clsPunto puntoCurva = clsCurvaBezier.CalcularPuntoCuadratico(P0, P1, P2, i);
                 staticCurveGraphics.DrawLine(penCurva, puntoAnterior.ToPoint(), puntoCurva.ToPoint());
@@ -275,7 +289,6 @@ namespace curvasBzierBspline
             g.DrawImage(staticCurveBitmap, 0, 0);
 
             // 3. Dibujar la capa de Rastro acumulado (si existe).
-            // Esto asegura que la curva verde no se vea interrumpida por el rastro.
             g.DrawImage(trailBitmap, 0, 0);
 
             // --- Lógica de Animación / De Casteljau (Cálculo) ---
@@ -284,7 +297,7 @@ namespace curvasBzierBspline
             clsPunto puntoAnimado = clsCurvaBezier.CalcularPuntoLineal(Q0, Q1, t);
 
             // 4. Dibujar el polígono de control (si está activo)
-            if (chkMostrarPoligono.Checked)
+            if (chkMostrarPoligono.Checked || isDragging)
             {
                 g.DrawLine(penPoligono, P0.ToPoint(), P1.ToPoint());
                 g.DrawLine(penPoligono, P1.ToPoint(), P2.ToPoint());
@@ -300,7 +313,7 @@ namespace curvasBzierBspline
             }
 
             // 6. Dibujar el rastro (solo si el checkbox está activo y estamos en animación)
-            if (chkDejarRastro.Checked && isPlaying)
+            if (chkDejarRastro.Checked && isPlaying && !isDragging)
             {
                 // Dibuja el punto en la capa de RASTRO para que se acumule.
                 trailGraphics.FillEllipse(brushRastro, puntoAnimado.X - 1, puntoAnimado.Y - 1, 2, 2);
@@ -315,8 +328,8 @@ namespace curvasBzierBspline
             DibujarPuntoControl(P1, brushP1, "P1");
             DibujarPuntoControl(P2, brushP2, "P2");
 
-            // Refrescar el Panel
-            panelDibujo.Invalidate();
+            // Usar Refresh para actualización inmediata
+            panelDibujo.Refresh();
         }
 
         private void DibujarPuntoControl(clsPunto p, Brush brush, string etiqueta)
@@ -359,7 +372,9 @@ namespace curvasBzierBspline
                 if (puntoArrastrado != null)
                 {
                     offsetArrastre = new Point((int)puntoArrastrado.X - e.X, (int)puntoArrastrado.Y - e.Y);
-                    throttledUpdate = false;
+                    isDragging = true;
+                    // Limpiar rastro al iniciar arrastre
+                    trailGraphics.Clear(Color.Transparent);
                 }
             }
         }
@@ -376,23 +391,33 @@ namespace curvasBzierBspline
 
                 ActualizarEtiquetas();
 
-                if (!throttledUpdate)
+                // Solo redibujar la curva con resolución baja si NO está en Play
+                if (!isPlaying)
                 {
-                    DibujarCurvaEstatica();
+                    DibujarCurvaEstatica(0.05f);
                     DibujarElementosDinamicos();
-
-                    throttledUpdate = true;
-                    Task.Delay(10).ContinueWith(t => { throttledUpdate = false; }, TaskScheduler.FromCurrentSynchronizationContext());
+                }
+                else
+                {
+                    // Marcar que necesitamos redibujado completo, pero no bloquear
+                    DibujarCurvaEstatica(0.05f);
+                    needsFullRedraw = true;
                 }
             }
         }
 
         private void PanelDibujo_MouseUp(object sender, MouseEventArgs e)
         {
-            puntoArrastrado = null;
-            DibujarCurvaEstatica();
-            DibujarElementosDinamicos();
-            throttledUpdate = false;
+            if (puntoArrastrado != null)
+            {
+                puntoArrastrado = null;
+                isDragging = false;
+
+                // Redibujo final de alta resolución
+                DibujarCurvaEstatica();
+                needsFullRedraw = false;
+                DibujarElementosDinamicos();
+            }
         }
 
         private float Distancia(Point p1, Point p2)

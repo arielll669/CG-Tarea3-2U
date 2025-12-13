@@ -50,9 +50,10 @@
             // 
             // panelDibujo
             // 
+            this.panelDibujo.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.panelDibujo.Location = new System.Drawing.Point(564, 29);
             this.panelDibujo.Name = "panelDibujo";
-            this.panelDibujo.Size = new System.Drawing.Size(200, 100);
+            this.panelDibujo.Size = new System.Drawing.Size(685, 363);
             this.panelDibujo.TabIndex = 0;
             // 
             // btnPlayPause
@@ -119,9 +120,9 @@
             this.lblVelocidad.AutoSize = true;
             this.lblVelocidad.Location = new System.Drawing.Point(180, 106);
             this.lblVelocidad.Name = "lblVelocidad";
-            this.lblVelocidad.Size = new System.Drawing.Size(82, 16);
+            this.lblVelocidad.Size = new System.Drawing.Size(89, 16);
             this.lblVelocidad.TabIndex = 9;
-            this.lblVelocidad.Text = "Velocidad: 5";
+            this.lblVelocidad.Text = "Velocidad: 20";
             // 
             // lblInstrucciones
             // 
@@ -137,7 +138,7 @@
             this.chkMostrarPoligono.AutoSize = true;
             this.chkMostrarPoligono.Checked = true;
             this.chkMostrarPoligono.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkMostrarPoligono.Location = new System.Drawing.Point(349, 193);
+            this.chkMostrarPoligono.Location = new System.Drawing.Point(185, 202);
             this.chkMostrarPoligono.Name = "chkMostrarPoligono";
             this.chkMostrarPoligono.Size = new System.Drawing.Size(192, 20);
             this.chkMostrarPoligono.TabIndex = 11;
@@ -149,7 +150,7 @@
             this.chkNumerarPuntos.AutoSize = true;
             this.chkNumerarPuntos.Checked = true;
             this.chkNumerarPuntos.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkNumerarPuntos.Location = new System.Drawing.Point(353, 215);
+            this.chkNumerarPuntos.Location = new System.Drawing.Point(189, 224);
             this.chkNumerarPuntos.Name = "chkNumerarPuntos";
             this.chkNumerarPuntos.Size = new System.Drawing.Size(124, 20);
             this.chkNumerarPuntos.TabIndex = 12;
@@ -158,7 +159,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Location = new System.Drawing.Point(183, 248);
+            this.groupBox1.Location = new System.Drawing.Point(19, 257);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(200, 100);
             this.groupBox1.TabIndex = 13;
@@ -167,7 +168,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Location = new System.Drawing.Point(424, 257);
+            this.groupBox2.Location = new System.Drawing.Point(260, 266);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(200, 100);
             this.groupBox2.TabIndex = 14;
@@ -178,7 +179,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1261, 450);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.chkNumerarPuntos);
@@ -194,7 +195,7 @@
             this.Controls.Add(this.btnPlayPause);
             this.Controls.Add(this.panelDibujo);
             this.Name = "frmGradoN";
-            this.Text = "frmGradoN";
+            this.Text = "Curva de grado N";
             ((System.ComponentModel.ISupportInitialize)(this.trackBarT)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVelocidad)).EndInit();
             this.ResumeLayout(false);

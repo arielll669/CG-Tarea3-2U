@@ -34,6 +34,7 @@
             this.cuadraticaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cubicaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bsplineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gradoNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,7 +46,7 @@
             this.bsplineToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(800, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -54,22 +55,23 @@
             this.bezierToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.linealToolStripMenuItem,
             this.cuadraticaToolStripMenuItem,
-            this.cubicaToolStripMenuItem});
+            this.cubicaToolStripMenuItem,
+            this.gradoNToolStripMenuItem});
             this.bezierToolStripMenuItem.Name = "bezierToolStripMenuItem";
-            this.bezierToolStripMenuItem.Size = new System.Drawing.Size(64, 26);
+            this.bezierToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
             this.bezierToolStripMenuItem.Text = "Bezier";
             // 
             // linealToolStripMenuItem
             // 
             this.linealToolStripMenuItem.Name = "linealToolStripMenuItem";
-            this.linealToolStripMenuItem.Size = new System.Drawing.Size(163, 26);
+            this.linealToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.linealToolStripMenuItem.Text = "Lineal";
             this.linealToolStripMenuItem.Click += new System.EventHandler(this.linealToolStripMenuItem_Click);
             // 
             // cuadraticaToolStripMenuItem
             // 
             this.cuadraticaToolStripMenuItem.Name = "cuadraticaToolStripMenuItem";
-            this.cuadraticaToolStripMenuItem.Size = new System.Drawing.Size(163, 26);
+            this.cuadraticaToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.cuadraticaToolStripMenuItem.Text = "Cuadratica";
             this.cuadraticaToolStripMenuItem.Click += new System.EventHandler(this.cuadraticaToolStripMenuItem_Click);
             // 
@@ -85,6 +87,13 @@
             this.bsplineToolStripMenuItem.Name = "bsplineToolStripMenuItem";
             this.bsplineToolStripMenuItem.Size = new System.Drawing.Size(77, 24);
             this.bsplineToolStripMenuItem.Text = "B-spline";
+            // 
+            // gradoNToolStripMenuItem
+            // 
+            this.gradoNToolStripMenuItem.Name = "gradoNToolStripMenuItem";
+            this.gradoNToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.gradoNToolStripMenuItem.Text = "Grado N";
+            this.gradoNToolStripMenuItem.Click += new System.EventHandler(this.gradoNToolStripMenuItem_Click);
             // 
             // home
             // 
@@ -111,6 +120,7 @@
         private System.Windows.Forms.ToolStripMenuItem linealToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cuadraticaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cubicaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gradoNToolStripMenuItem;
     }
 }
 
