@@ -315,5 +315,10 @@ namespace curvasBzierBspline
             // Dibuja la imagen del canvas en el panel
             e.Graphics.DrawImage(canvas, 0, 0);
         }
+
+        private void frmLineal_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

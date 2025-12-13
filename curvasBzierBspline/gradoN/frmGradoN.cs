@@ -487,5 +487,10 @@ namespace curvasBzierBspline
         {
             e.Graphics.DrawImage(canvas, 0, 0);
         }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

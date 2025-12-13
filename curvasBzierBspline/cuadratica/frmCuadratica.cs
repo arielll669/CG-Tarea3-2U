@@ -433,5 +433,10 @@ namespace curvasBzierBspline
         {
             e.Graphics.DrawImage(canvas, 0, 0);
         }
+
+        private void frmCuadratica_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

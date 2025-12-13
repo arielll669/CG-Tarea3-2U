@@ -46,30 +46,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frmCuadratica.cs">
+    <Compile Include="clsBspline.cs" />
+    <Compile Include="cuadratica\frmCuadratica.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmCuadratica.Designer.cs">
+    <Compile Include="cuadratica\frmCuadratica.Designer.cs">
       <DependentUpon>frmCuadratica.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmCubica.cs">
+    <Compile Include="cubica\frmCubica.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmCubica.Designer.cs">
+    <Compile Include="cubica\frmCubica.Designer.cs">
       <DependentUpon>frmCubica.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmGradoN.cs">
+    <Compile Include="frmBspline.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmGradoN.Designer.cs">
+    <Compile Include="frmBspline.Designer.cs">
+      <DependentUpon>frmBspline.cs</DependentUpon>
+    </Compile>
+    <Compile Include="gradoN\frmGradoN.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="gradoN\frmGradoN.Designer.cs">
       <DependentUpon>frmGradoN.cs</DependentUpon>
     </Compile>
     <Compile Include="lineal\clsCurvaBezier.cs" />
     <Compile Include="lineal\clsPunto.cs" />
-    <Compile Include="frmLineal.cs">
+    <Compile Include="lineal\frmLineal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmLineal.Designer.cs">
+    <Compile Include="lineal\frmLineal.Designer.cs">
       <DependentUpon>frmLineal.cs</DependentUpon>
     </Compile>
     <Compile Include="home.cs">
@@ -80,16 +87,19 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="frmCuadratica.resx">
+    <EmbeddedResource Include="cuadratica\frmCuadratica.resx">
       <DependentUpon>frmCuadratica.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmCubica.resx">
+    <EmbeddedResource Include="cubica\frmCubica.resx">
       <DependentUpon>frmCubica.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmGradoN.resx">
+    <EmbeddedResource Include="frmBspline.resx">
+      <DependentUpon>frmBspline.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="gradoN\frmGradoN.resx">
       <DependentUpon>frmGradoN.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmLineal.resx">
+    <EmbeddedResource Include="lineal\frmLineal.resx">
       <DependentUpon>frmLineal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="home.resx">
@@ -117,9 +127,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="cuadratica\" />
-    <Folder Include="cubica\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

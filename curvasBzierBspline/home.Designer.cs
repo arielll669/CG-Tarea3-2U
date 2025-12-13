@@ -35,6 +35,7 @@
             this.cubicaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bsplineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gradoNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cruvaBsplineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,6 +85,8 @@
             // 
             // bsplineToolStripMenuItem
             // 
+            this.bsplineToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cruvaBsplineToolStripMenuItem});
             this.bsplineToolStripMenuItem.Name = "bsplineToolStripMenuItem";
             this.bsplineToolStripMenuItem.Size = new System.Drawing.Size(77, 24);
             this.bsplineToolStripMenuItem.Text = "B-spline";
@@ -94,6 +97,13 @@
             this.gradoNToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.gradoNToolStripMenuItem.Text = "Grado N";
             this.gradoNToolStripMenuItem.Click += new System.EventHandler(this.gradoNToolStripMenuItem_Click);
+            // 
+            // cruvaBsplineToolStripMenuItem
+            // 
+            this.cruvaBsplineToolStripMenuItem.Name = "cruvaBsplineToolStripMenuItem";
+            this.cruvaBsplineToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.cruvaBsplineToolStripMenuItem.Text = "Cruva Bspline";
+            this.cruvaBsplineToolStripMenuItem.Click += new System.EventHandler(this.cruvaBsplineToolStripMenuItem_Click);
             // 
             // home
             // 
@@ -121,6 +131,7 @@
         private System.Windows.Forms.ToolStripMenuItem cuadraticaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cubicaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gradoNToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cruvaBsplineToolStripMenuItem;
     }
 }
 
