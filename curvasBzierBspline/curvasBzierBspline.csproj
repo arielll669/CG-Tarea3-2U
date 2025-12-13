@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="clsBspline.cs" />
+    <Compile Include="Bspline\clsBspline.cs" />
     <Compile Include="cuadratica\frmCuadratica.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,10 +59,10 @@
     <Compile Include="cubica\frmCubica.Designer.cs">
       <DependentUpon>frmCubica.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmBspline.cs">
+    <Compile Include="Bspline\frmBspline.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmBspline.Designer.cs">
+    <Compile Include="Bspline\frmBspline.Designer.cs">
       <DependentUpon>frmBspline.cs</DependentUpon>
     </Compile>
     <Compile Include="gradoN\frmGradoN.cs">
@@ -93,7 +93,7 @@
     <EmbeddedResource Include="cubica\frmCubica.resx">
       <DependentUpon>frmCubica.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmBspline.resx">
+    <EmbeddedResource Include="Bspline\frmBspline.resx">
       <DependentUpon>frmBspline.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="gradoN\frmGradoN.resx">
