@@ -246,11 +246,8 @@
             // 
             // cboGrado
             // 
+            this.cboGrado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboGrado.FormattingEnabled = true;
-            this.cboGrado.Items.AddRange(new object[] {
-            "Bspline Lineal (1)",
-            "Bspline Cuadrática (2)",
-            "Bspline Grado N"});
             this.cboGrado.Location = new System.Drawing.Point(20, 37);
             this.cboGrado.Name = "cboGrado";
             this.cboGrado.Size = new System.Drawing.Size(210, 26);
