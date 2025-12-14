@@ -173,10 +173,10 @@
             // 
             // lblInstrucciones
             // 
-            this.lblInstrucciones.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblInstrucciones.Location = new System.Drawing.Point(1360, 48);
+            this.lblInstrucciones.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInstrucciones.Location = new System.Drawing.Point(403, 37);
             this.lblInstrucciones.Name = "lblInstrucciones";
-            this.lblInstrucciones.Size = new System.Drawing.Size(225, 60);
+            this.lblInstrucciones.Size = new System.Drawing.Size(275, 71);
             this.lblInstrucciones.TabIndex = 16;
             this.lblInstrucciones.Text = "Clic izquierdo: Agregar punto | Clic derecho: Eliminar | Arrastrar: Move";
             // 
@@ -250,7 +250,7 @@
             this.cboGrado.FormattingEnabled = true;
             this.cboGrado.Location = new System.Drawing.Point(20, 37);
             this.cboGrado.Name = "cboGrado";
-            this.cboGrado.Size = new System.Drawing.Size(210, 26);
+            this.cboGrado.Size = new System.Drawing.Size(256, 26);
             this.cboGrado.TabIndex = 0;
             // 
             // groupBox2

@@ -61,7 +61,6 @@ public static class clsBspline
             case KnotType.Periodica:
                 // Vector periódico: Para curvas cerradas
                 // Nodos uniformes sin multiplicidad en extremos
-                // Esto permite que la curva se cierre suavemente
                 for (int i = 0; i < m; i++)
                     nodos.Add((float)i);
                 break;
@@ -99,9 +98,6 @@ public static class clsBspline
         }
 
         // Caso recursivo: Fórmula de Cox-de Boor
-        // N_{i,k}(u) = ((u - t_i) / (t_{i+k} - t_i)) * N_{i,k-1}(u) +
-        //              ((t_{i+k+1} - u) / (t_{i+k+1} - t_{i+1})) * N_{i+1,k-1}(u)
-
         // Verificar límites para evitar accesos fuera de rango
         if (i + k >= nodos.Count || i + k + 1 >= nodos.Count)
             return 0.0f;
@@ -131,7 +127,6 @@ public static class clsBspline
         if (nodos.Count == 0) return (0, 0);
 
         // El rango válido es [t_k, t_n]
-        // donde k es el grado y n es el número de puntos de control
         int indiceMin = k;
         int indiceMax = n;
 
@@ -153,23 +148,25 @@ public static class clsBspline
 
         try
         {
-            // Para periódica, usar puntos envueltos
-            List<clsPunto> puntosParaUsar = new List<clsPunto>(controlPoints);
+            // Preparar puntos según el tipo de curva
+            List<clsPunto> puntosParaCalculo = new List<clsPunto>(controlPoints);
+            int nCalculo = n;
 
             if (tipoNodos == KnotType.Periodica)
             {
-                // Agregar los primeros gradoK puntos al final para cerrar
+                // Para periódica, agregar los primeros gradoK puntos al final
                 for (int i = 0; i < gradoK; i++)
                 {
-                    puntosParaUsar.Add(new clsPunto(controlPoints[i].X, controlPoints[i].Y));
+                    puntosParaCalculo.Add(new clsPunto(controlPoints[i].X, controlPoints[i].Y));
                 }
-                n = puntosParaUsar.Count; // Actualizar n con puntos envueltos
+                nCalculo = puntosParaCalculo.Count;
             }
 
-            List<float> nodos = CrearVectorNodos(n, gradoK, tipoNodos);
+            // Crear vector de nodos con el número correcto de puntos
+            List<float> nodos = CrearVectorNodos(nCalculo, gradoK, tipoNodos);
             if (nodos.Count == 0) return controlPoints[0];
 
-            var (uMin, uMax) = ObtenerRangoU(n, gradoK, tipoNodos);
+            var (uMin, uMax) = ObtenerRangoU(nCalculo, gradoK, tipoNodos);
 
             if (Math.Abs(uMax - uMin) < Epsilon) return controlPoints[0];
 
@@ -179,20 +176,17 @@ public static class clsBspline
             // Manejo de extremos según el tipo
             if (tipoNodos == KnotType.AbiertoUniforme)
             {
-                // Para Abierto/Uniforme: permitir llegar exactamente a los extremos
-                if (t >= 0.999f) // Cuando está muy cerca del final
-                    u = uMax; // Llegar exactamente al extremo
-                else if (t <= 0.001f) // Cuando está muy cerca del inicio
-                    u = uMin; // Estar exactamente en el inicio
+                if (t >= 0.999f)
+                    u = uMax;
+                else if (t <= 0.001f)
+                    u = uMin;
                 else
                     u = Math.Max(uMin, Math.Min(uMax, u));
             }
             else if (tipoNodos == KnotType.Periodica)
             {
-                // Para Periódica: cerrar el ciclo suavemente
                 if (t >= 0.999f)
                 {
-                    // Cuando t→1, el punto debe estar muy cerca del inicio para cerrar el loop
                     u = uMax - Epsilon;
                 }
                 else
@@ -202,7 +196,6 @@ public static class clsBspline
             }
             else // Uniforme
             {
-                // Para Uniforme: mantener comportamiento original
                 u = Math.Max(uMin, Math.Min(uMax, u));
                 if (Math.Abs(t - 1.0f) < Epsilon)
                     u = uMax - Epsilon * 10;
@@ -211,15 +204,15 @@ public static class clsBspline
             float x = 0.0f, y = 0.0f, sumaBases = 0.0f;
 
             // Calcular C(u) = Σ P_i * N_{i,k}(u)
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < nCalculo; i++)
             {
                 float Nik = FuncionBase(i, gradoK, u, nodos);
-                x += puntosParaUsar[i].X * Nik;
-                y += puntosParaUsar[i].Y * Nik;
+                x += puntosParaCalculo[i].X * Nik;
+                y += puntosParaCalculo[i].Y * Nik;
                 sumaBases += Nik;
             }
 
-            // Normalizar si la suma no es 1 (puede pasar en casos extremos)
+            // Normalizar si es necesario
             if (Math.Abs(sumaBases) > Epsilon && Math.Abs(sumaBases - 1.0f) > Epsilon)
             {
                 x /= sumaBases;
@@ -249,22 +242,10 @@ public static class clsBspline
 
         try
         {
-            // Para curvas periódicas, envolver puntos de control
-            List<clsPunto> puntosParaUsar = new List<clsPunto>(controlPoints);
-
-            if (tipoNodos == KnotType.Periodica)
-            {
-                // Agregar los primeros k puntos al final para cerrar la curva
-                for (int i = 0; i < gradoK; i++)
-                {
-                    puntosParaUsar.Add(new clsPunto(controlPoints[i].X, controlPoints[i].Y));
-                }
-            }
-
             for (int i = 0; i <= numPuntos; i++)
             {
                 float t = (float)i / numPuntos;
-                clsPunto punto = CalcularPuntoCurva(puntosParaUsar, gradoK, t, tipoNodos);
+                clsPunto punto = CalcularPuntoCurva(controlPoints, gradoK, t, tipoNodos);
 
                 if (!float.IsNaN(punto.X) && !float.IsNaN(punto.Y) &&
                     !float.IsInfinity(punto.X) && !float.IsInfinity(punto.Y))
