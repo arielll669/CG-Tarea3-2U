@@ -23,7 +23,7 @@ namespace curvasBzierBspline
         private Graphics trailGraphics;
 
         // Parámetros B-spline
-        private int gradoK = 3; // Grado inicial (Grado 3 - Cúbica)
+        private int gradoK = 2; // Grado inicial (Grado 2 - Cuadrática)
         private KnotType tipoNodos = KnotType.AbiertoUniforme;
         private float t = 0.0f;
 
@@ -35,7 +35,7 @@ namespace curvasBzierBspline
         private clsPunto puntoArrastrado = null;
         private Point offsetArrastre;
         private bool isDragging = false;
-        private bool curveNeedsRedraw = false;
+        private bool needsFullRedraw = false;
 
         // Constantes y Pinceles
         private const int RADIO_PUNTO_CONTROL = 6;
@@ -54,6 +54,11 @@ namespace curvasBzierBspline
             // Inicialización de Bitmaps y Graphics
             int w = panelDibujo.Width;
             int h = panelDibujo.Height;
+
+            // Activar doble buffer en el panel para eliminar parpadeo
+            panelDibujo.GetType().GetProperty("DoubleBuffered",
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                .SetValue(panelDibujo, true, null);
 
             canvas = new Bitmap(w, h);
             g = Graphics.FromImage(canvas);
@@ -96,13 +101,15 @@ namespace curvasBzierBspline
 
         private void InicializarControlesUI()
         {
-            // GRADO K (ComboBox)
+            // GRADO K (ComboBox) - CORREGIDO
             cboGrado.Items.Clear();
-            cboGrado.Items.Add("2 (Cuadrática)");
-            cboGrado.Items.Add("3 (Cúbica)");
-            cboGrado.Items.Add("4");
-            cboGrado.Items.Add("5");
-            cboGrado.SelectedIndex = 1; // Grado 3 Cúbica por defecto
+            cboGrado.Items.Add("B-spline Lineal (1)");
+            cboGrado.Items.Add("B-spline Cuadrática (2)");
+            cboGrado.Items.Add("B-spline Cúbica (3)");
+            cboGrado.Items.Add("B-spline Grado 4");
+            cboGrado.Items.Add("B-spline Grado 5");
+            cboGrado.Items.Add("B-spline Grado 6");
+            cboGrado.SelectedIndex = 1; // Grado 2 Cuadrática por defecto
             cboGrado.SelectedIndexChanged += CboGrado_SelectedIndexChanged;
 
             // TRACKBARS
@@ -166,14 +173,17 @@ namespace curvasBzierBspline
 
         private void ActualizarGradoK()
         {
-            // El índice + 2 da el grado (0=2, 1=3, 2=4, 3=5)
-            gradoK = cboGrado.SelectedIndex + 2;
+            // CORREGIDO: El índice + 1 da el grado (0=1, 1=2, 2=3, 3=4, 4=5, 5=6)
+            gradoK = cboGrado.SelectedIndex + 1;
 
             // Si el número de puntos es insuficiente, deshabilitar Play
-            if (controlPoints.Count < gradoK)
+            // Se necesitan al menos gradoK+1 puntos para una B-spline
+            int puntosMinimos = gradoK + 1;
+
+            if (controlPoints.Count < puntosMinimos)
             {
                 btnPlayPause.Enabled = false;
-                btnPlayPause.Text = $"Necesita >= {gradoK} puntos";
+                btnPlayPause.Text = $"Necesita >= {puntosMinimos} puntos";
             }
             else
             {
@@ -182,7 +192,7 @@ namespace curvasBzierBspline
             }
 
             // Redibujar si hay cambios
-            if (controlPoints.Count >= gradoK)
+            if (controlPoints.Count >= puntosMinimos)
             {
                 DibujarCurvaEstatica();
                 DibujarElementosDinamicos();
@@ -208,7 +218,8 @@ namespace curvasBzierBspline
             }
 
             // Forzar redibujo al cambiar el tipo de nodo
-            if (controlPoints.Count >= gradoK)
+            int puntosMinimos = gradoK + 1;
+            if (controlPoints.Count >= puntosMinimos)
             {
                 DibujarCurvaEstatica();
                 DibujarElementosDinamicos();
@@ -231,7 +242,8 @@ namespace curvasBzierBspline
 
         private void BtnPlayPause_Click(object sender, EventArgs e)
         {
-            if (controlPoints.Count < gradoK) return;
+            int puntosMinimos = gradoK + 1;
+            if (controlPoints.Count < puntosMinimos) return;
 
             isPlaying = !isPlaying;
             if (isPlaying)
@@ -300,7 +312,8 @@ namespace curvasBzierBspline
 
         private void TimerAnimacion_Tick(object sender, EventArgs e)
         {
-            if (controlPoints.Count < gradoK) return;
+            int puntosMinimos = gradoK + 1;
+            if (controlPoints.Count < puntosMinimos) return;
 
             float incremento = 0.01f * (float)trackBarVelocidad.Value / 5.0f;
 
@@ -327,11 +340,11 @@ namespace curvasBzierBspline
 
             ActualizarEtiquetas();
 
-            // Control de Redibujo: Si el mouse movió un punto
-            if (curveNeedsRedraw)
+            // Si hay un redibujado completo pendiente y no estamos arrastrando
+            if (needsFullRedraw && !isDragging)
             {
                 DibujarCurvaEstatica();
-                curveNeedsRedraw = false;
+                needsFullRedraw = false;
             }
 
             DibujarElementosDinamicos();
@@ -342,16 +355,17 @@ namespace curvasBzierBspline
         /// <summary>
         /// Dibuja el fondo y la curva B-spline completa en la capa estática.
         /// </summary>
-        private void DibujarCurvaEstatica()
+        private void DibujarCurvaEstatica(int numPuntos = 200)
         {
             staticCurveGraphics.Clear(panelDibujo.BackColor);
 
-            if (controlPoints.Count < gradoK) return;
+            int puntosMinimos = gradoK + 1;
+            if (controlPoints.Count < puntosMinimos) return;
 
             try
             {
                 // Usar el método optimizado de CalcularCurva
-                List<clsPunto> puntosCurva = clsBspline.CalcularCurva(controlPoints, gradoK, tipoNodos, 200);
+                List<clsPunto> puntosCurva = clsBspline.CalcularCurva(controlPoints, gradoK, tipoNodos, numPuntos);
 
                 if (puntosCurva.Count > 1)
                 {
@@ -377,12 +391,14 @@ namespace curvasBzierBspline
 
             if (controlPoints.Count < 1)
             {
-                panelDibujo.Invalidate();
+                panelDibujo.Refresh();
                 return;
             }
 
+            int puntosMinimos = gradoK + 1;
+
             // Si hay suficientes puntos, calcular el punto animado
-            if (controlPoints.Count >= gradoK)
+            if (controlPoints.Count >= puntosMinimos)
             {
                 try
                 {
@@ -396,7 +412,7 @@ namespace curvasBzierBspline
                                   RADIO_PUNTO_CURVA * 2, RADIO_PUNTO_CURVA * 2);
 
                     // 2. Dibujar el rastro durante la animación
-                    if (isPlaying)
+                    if (isPlaying && !isDragging)
                     {
                         trailGraphics.FillEllipse(brushRastro, puntoAnimado.X - 1, puntoAnimado.Y - 1, 2, 2);
                     }
@@ -418,7 +434,7 @@ namespace curvasBzierBspline
             }
 
             // 4. Mostrar Nodos (opcional)
-            if (chkMostrarKnots.Checked && controlPoints.Count >= gradoK)
+            if (chkMostrarKnots.Checked && controlPoints.Count >= puntosMinimos)
             {
                 DibujarVectorNodos();
             }
@@ -429,7 +445,7 @@ namespace curvasBzierBspline
                 DibujarPuntoControl(controlPoints[i], Brushes.Black, i);
             }
 
-            panelDibujo.Invalidate();
+            panelDibujo.Refresh();
         }
 
         private void DibujarVectorNodos()
@@ -511,11 +527,13 @@ namespace curvasBzierBspline
         {
             lblValorT.Text = $"t = {t:F2}";
 
+            int puntosMinimos = gradoK + 1;
+
             // Actualizar estado del botón
-            if (controlPoints.Count < gradoK)
+            if (controlPoints.Count < puntosMinimos)
             {
                 btnPlayPause.Enabled = false;
-                btnPlayPause.Text = $"Necesita >= {gradoK} puntos";
+                btnPlayPause.Text = $"Necesita >= {puntosMinimos} puntos";
             }
             else
             {
@@ -528,11 +546,9 @@ namespace curvasBzierBspline
 
         private void PanelDibujo_MouseDown(object sender, MouseEventArgs e)
         {
-            if (isPlaying) return;
-
             if (e.Button == MouseButtons.Left)
             {
-                // 1. Intentar arrastrar un punto existente
+                // 1. Intentar arrastrar un punto existente (permitido durante animación)
                 clsPunto pFound = controlPoints.FirstOrDefault(p => Distancia(e.Location, p.ToPoint()) < RADIO_PUNTO_CONTROL * 2);
 
                 if (pFound != null)
@@ -540,39 +556,38 @@ namespace curvasBzierBspline
                     puntoArrastrado = pFound;
                     offsetArrastre = new Point((int)pFound.X - e.X, (int)pFound.Y - e.Y);
                     isDragging = true;
+                    // Limpiar rastro al iniciar arrastre
+                    trailGraphics.Clear(Color.Transparent);
                     return;
                 }
 
-                // 2. Si no se está arrastrando, agregar un nuevo punto
-                clsPunto nuevoPunto = new clsPunto(e.X, e.Y);
-                controlPoints.Add(nuevoPunto);
-
-                // Si tenemos suficientes puntos para el grado actual, redibujar
-                if (controlPoints.Count >= gradoK)
+                // 2. Si no se está arrastrando y NO está en Play, agregar un nuevo punto
+                if (!isPlaying)
                 {
-                    DibujarCurvaEstatica();
-                }
+                    clsPunto nuevoPunto = new clsPunto(e.X, e.Y);
+                    controlPoints.Add(nuevoPunto);
 
-                ActualizarEtiquetas();
-                DibujarElementosDinamicos();
+                    int puntosMinimos = gradoK + 1;
+
+                    // CRÍTICO: Siempre redibujar la curva cuando se agrega un punto
+                    // incluso si aún no hay suficientes puntos para el grado actual
+                    DibujarCurvaEstatica();
+
+                    ActualizarEtiquetas();
+                    DibujarElementosDinamicos();
+                }
             }
-            else if (e.Button == MouseButtons.Right)
+            else if (e.Button == MouseButtons.Right && !isPlaying)
             {
-                // Eliminar un punto con clic derecho
+                // Eliminar un punto con clic derecho solo cuando NO está en Play
                 clsPunto puntoAEliminar = controlPoints.FirstOrDefault(p => Distancia(e.Location, p.ToPoint()) < RADIO_PUNTO_CONTROL * 2);
 
                 if (puntoAEliminar != null)
                 {
                     controlPoints.Remove(puntoAEliminar);
 
-                    if (controlPoints.Count >= gradoK)
-                    {
-                        DibujarCurvaEstatica();
-                    }
-                    else
-                    {
-                        staticCurveGraphics.Clear(panelDibujo.BackColor);
-                    }
+                    // Siempre redibujar después de eliminar
+                    DibujarCurvaEstatica();
 
                     ActualizarEtiquetas();
                     DibujarElementosDinamicos();
@@ -592,12 +607,18 @@ namespace curvasBzierBspline
                 puntoArrastrado.X = Math.Max(0, Math.Min(panelDibujo.Width, puntoArrastrado.X));
                 puntoArrastrado.Y = Math.Max(0, Math.Min(panelDibujo.Height, puntoArrastrado.Y));
 
-                // Marcar que necesita redibujo de curva
-                curveNeedsRedraw = true;
-
-                // Redibujar inmediatamente para retroalimentación visual
-                DibujarCurvaEstatica();
-                DibujarElementosDinamicos();
+                // Solo redibujar con resolución baja si NO está en Play
+                if (!isPlaying)
+                {
+                    DibujarCurvaEstatica(50); // Baja resolución durante arrastre
+                    DibujarElementosDinamicos();
+                }
+                else
+                {
+                    // Marcar que necesitamos redibujado completo, pero no bloquear
+                    DibujarCurvaEstatica(50); // Baja resolución
+                    needsFullRedraw = true;
+                }
             }
         }
 
@@ -610,9 +631,8 @@ namespace curvasBzierBspline
 
                 // Redibujo final de ALTA RESOLUCIÓN
                 DibujarCurvaEstatica();
+                needsFullRedraw = false;
                 DibujarElementosDinamicos();
-
-                curveNeedsRedraw = false;
             }
         }
 

@@ -48,11 +48,11 @@
             this.chkNumerarPuntos = new System.Windows.Forms.CheckBox();
             this.chkMostrarKnots = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cboGrado = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lblValorT = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.cboGrado = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarT)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVelocidad)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -244,6 +244,18 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Configuración de B-Spline";
             // 
+            // cboGrado
+            // 
+            this.cboGrado.FormattingEnabled = true;
+            this.cboGrado.Items.AddRange(new object[] {
+            "Bspline Lineal (1)",
+            "Bspline Cuadrática (2)",
+            "Bspline Grado N"});
+            this.cboGrado.Location = new System.Drawing.Point(20, 37);
+            this.cboGrado.Name = "cboGrado";
+            this.cboGrado.Size = new System.Drawing.Size(210, 26);
+            this.cboGrado.TabIndex = 0;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.lblValorT);
@@ -291,18 +303,6 @@
             this.label1.Size = new System.Drawing.Size(273, 44);
             this.label1.TabIndex = 24;
             this.label1.Text = "Curvas de B-spline";
-            // 
-            // cboGrado
-            // 
-            this.cboGrado.FormattingEnabled = true;
-            this.cboGrado.Items.AddRange(new object[] {
-            "Lineal (1)",
-            "Cuadrática (2)",
-            "Personalizado"});
-            this.cboGrado.Location = new System.Drawing.Point(20, 37);
-            this.cboGrado.Name = "cboGrado";
-            this.cboGrado.Size = new System.Drawing.Size(210, 26);
-            this.cboGrado.TabIndex = 0;
             // 
             // frmBspline
             // 
