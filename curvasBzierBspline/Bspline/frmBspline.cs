@@ -8,12 +8,10 @@ namespace curvasBzierBspline
 {
     public partial class frmBspline : Form
     {
-        // === VARIABLES DE ESTADO ===
         private static frmBspline instancia;
         private List<clsPunto> controlPoints = new List<clsPunto>();
 
-        // Parámetros B-spline
-        private int gradoK = 2; // Grado por defecto: Cuadrática
+        private int gradoK = 2;
         private KnotType tipoNodos = KnotType.AbiertoUniforme;
         private float t = 0.0f;
 
@@ -21,16 +19,13 @@ namespace curvasBzierBspline
         private bool direccionHaciaFinal = true;
         private bool isPlaying = false;
 
-        // Control de arrastre
         private clsPunto puntoArrastrado = null;
         private Point offsetArrastre;
         private bool isDragging = false;
         private bool needsFullRedraw = false;
 
-        // Bandera para evitar eventos durante inicialización
         private bool isInitializing = true;
 
-        // === CAPAS DE DIBUJO (OPTIMIZACIÓN) ===
         private Graphics g;
         private Bitmap canvas;
         private Bitmap staticCurveBitmap;
@@ -38,7 +33,6 @@ namespace curvasBzierBspline
         private Bitmap trailBitmap;
         private Graphics trailGraphics;
 
-        // === CONSTANTES Y ESTILOS ===
         private const int RADIO_PUNTO_CONTROL = 6;
         private const int RADIO_PUNTO_CURVA = 3;
         private Pen penCurva = new Pen(Color.Red, 2);
@@ -47,7 +41,6 @@ namespace curvasBzierBspline
         private Brush brushRastro = new SolidBrush(Color.FromArgb(100, Color.LightGray));
         private Pen penKnots = new Pen(Color.Teal, 1) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dot };
 
-        // === CONSTRUCTOR ===
         public frmBspline()
         {
             InitializeComponent();
@@ -63,20 +56,17 @@ namespace curvasBzierBspline
             return instancia;
         }
 
-        // === INICIALIZACIÓN ===
         private void InicializarFormulario()
         {
-            isInitializing = true; // Bloquear eventos temporalmente
+            isInitializing = true; 
 
             int w = panelDibujo.Width;
             int h = panelDibujo.Height;
 
-            // Activar doble buffer
             panelDibujo.GetType().GetProperty("DoubleBuffered",
                 System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
                 .SetValue(panelDibujo, true, null);
 
-            // Inicializar bitmaps
             canvas = new Bitmap(w, h);
             g = Graphics.FromImage(canvas);
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -92,15 +82,13 @@ namespace curvasBzierBspline
             trailGraphics.Clear(Color.Transparent);
             trailGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-            // Configurar ComboBox de grado (AHORA SÍ ESTÁ VACÍO)
             cboGrado.Items.Clear();
             cboGrado.Items.Add("B-spline Lineal (1)");
             cboGrado.Items.Add("B-spline Cuadrática (2)");
             cboGrado.Items.Add("B-spline Grado N");
-            cboGrado.SelectedIndex = 1; // Cuadrática por defecto
+            cboGrado.SelectedIndex = 1; 
             cboGrado.SelectedIndexChanged += CboGrado_SelectedIndexChanged;
 
-            // Configurar TrackBars
             trackBarT.Minimum = 0;
             trackBarT.Maximum = 100;
             trackBarT.Value = 0;
@@ -108,7 +96,7 @@ namespace curvasBzierBspline
 
             trackBarVelocidad.Minimum = 1;
             trackBarVelocidad.Maximum = 20;
-            trackBarVelocidad.Value = 20;
+            trackBarVelocidad.Value = 17;
             trackBarVelocidad.Scroll += TrackBarVelocidad_Scroll;
 
             timerAnimacion.Interval = 1000 / trackBarVelocidad.Value;

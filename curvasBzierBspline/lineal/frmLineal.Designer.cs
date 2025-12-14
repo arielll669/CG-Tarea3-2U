@@ -32,15 +32,15 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.trackBarT = new System.Windows.Forms.TrackBar();
             this.btnPlayPause = new System.Windows.Forms.Button();
+            this.lblValorT = new System.Windows.Forms.Label();
+            this.lblTitulo = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
             this.lblVelocidad = new System.Windows.Forms.Label();
             this.trackBarVelocidad = new System.Windows.Forms.TrackBar();
             this.chkMostrarLineas = new System.Windows.Forms.CheckBox();
             this.timerAnimacion = new System.Windows.Forms.Timer(this.components);
             this.lblP1 = new System.Windows.Forms.Label();
-            this.lblValorT = new System.Windows.Forms.Label();
             this.lblP0 = new System.Windows.Forms.Label();
-            this.lblTitulo = new System.Windows.Forms.Label();
             this.panelDibujo = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
@@ -82,6 +82,26 @@
             this.btnPlayPause.Text = "Play";
             this.btnPlayPause.UseVisualStyleBackColor = true;
             this.btnPlayPause.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // lblValorT
+            // 
+            this.lblValorT.AutoSize = true;
+            this.lblValorT.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblValorT.Location = new System.Drawing.Point(103, 39);
+            this.lblValorT.Name = "lblValorT";
+            this.lblValorT.Size = new System.Drawing.Size(40, 18);
+            this.lblValorT.TabIndex = 7;
+            this.lblValorT.Text = "0.00";
+            // 
+            // lblTitulo
+            // 
+            this.lblTitulo.AutoSize = true;
+            this.lblTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitulo.Location = new System.Drawing.Point(18, 39);
+            this.lblTitulo.Name = "lblTitulo";
+            this.lblTitulo.Size = new System.Drawing.Size(85, 18);
+            this.lblTitulo.TabIndex = 10;
+            this.lblTitulo.Text = "Valor de t:";
             // 
             // btnReset
             // 
@@ -128,16 +148,6 @@
             this.lblP1.TabIndex = 5;
             this.lblP1.Text = "P1: (0, 0)";
             // 
-            // lblValorT
-            // 
-            this.lblValorT.AutoSize = true;
-            this.lblValorT.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblValorT.Location = new System.Drawing.Point(103, 39);
-            this.lblValorT.Name = "lblValorT";
-            this.lblValorT.Size = new System.Drawing.Size(40, 18);
-            this.lblValorT.TabIndex = 7;
-            this.lblValorT.Text = "0.00";
-            // 
             // lblP0
             // 
             this.lblP0.AutoSize = true;
@@ -147,16 +157,6 @@
             this.lblP0.Size = new System.Drawing.Size(78, 18);
             this.lblP0.TabIndex = 8;
             this.lblP0.Text = "P0: (0, 0)";
-            // 
-            // lblTitulo
-            // 
-            this.lblTitulo.AutoSize = true;
-            this.lblTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitulo.Location = new System.Drawing.Point(18, 39);
-            this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(85, 18);
-            this.lblTitulo.TabIndex = 10;
-            this.lblTitulo.Text = "Valor de t:";
             // 
             // panelDibujo
             // 
@@ -179,7 +179,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.LightCyan;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1359, 857);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblP1);

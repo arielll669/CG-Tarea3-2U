@@ -37,6 +37,8 @@
             this.btnPlayPause = new System.Windows.Forms.Button();
             this.trackBarT = new System.Windows.Forms.TrackBar();
             this.btnReset = new System.Windows.Forms.Button();
+            this.lblTituloT = new System.Windows.Forms.Label();
+            this.lblValorT = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.chkMostrarPoligono = new System.Windows.Forms.CheckBox();
             this.chkMostrarConstruccion = new System.Windows.Forms.CheckBox();
@@ -45,9 +47,7 @@
             this.lblP0 = new System.Windows.Forms.Label();
             this.lblTituloP1 = new System.Windows.Forms.Label();
             this.lblP1 = new System.Windows.Forms.Label();
-            this.lblValorT = new System.Windows.Forms.Label();
             this.lblTituloP2 = new System.Windows.Forms.Label();
-            this.lblTituloT = new System.Windows.Forms.Label();
             this.lblP2 = new System.Windows.Forms.Label();
             this.timerAnimacion = new System.Windows.Forms.Timer(this.components);
             this.label1 = new System.Windows.Forms.Label();
@@ -132,6 +132,27 @@
             this.btnReset.TabIndex = 7;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
+            // 
+            // lblTituloT
+            // 
+            this.lblTituloT.AutoSize = true;
+            this.lblTituloT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTituloT.Location = new System.Drawing.Point(26, 31);
+            this.lblTituloT.Name = "lblTituloT";
+            this.lblTituloT.Size = new System.Drawing.Size(97, 20);
+            this.lblTituloT.TabIndex = 14;
+            this.lblTituloT.Text = "Valor de t:";
+            // 
+            // lblValorT
+            // 
+            this.lblValorT.AutoSize = true;
+            this.lblValorT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblValorT.ForeColor = System.Drawing.Color.Blue;
+            this.lblValorT.Location = new System.Drawing.Point(139, 31);
+            this.lblValorT.Name = "lblValorT";
+            this.lblValorT.Size = new System.Drawing.Size(44, 20);
+            this.lblValorT.TabIndex = 15;
+            this.lblValorT.Text = "0.00";
             // 
             // groupBox2
             // 
@@ -222,17 +243,6 @@
             this.lblP1.TabIndex = 11;
             this.lblP1.Text = "(0, 0)";
             // 
-            // lblValorT
-            // 
-            this.lblValorT.AutoSize = true;
-            this.lblValorT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblValorT.ForeColor = System.Drawing.Color.Blue;
-            this.lblValorT.Location = new System.Drawing.Point(139, 31);
-            this.lblValorT.Name = "lblValorT";
-            this.lblValorT.Size = new System.Drawing.Size(44, 20);
-            this.lblValorT.TabIndex = 15;
-            this.lblValorT.Text = "0.00";
-            // 
             // lblTituloP2
             // 
             this.lblTituloP2.AutoSize = true;
@@ -242,16 +252,6 @@
             this.lblTituloP2.Size = new System.Drawing.Size(37, 20);
             this.lblTituloP2.TabIndex = 12;
             this.lblTituloP2.Text = "P2:";
-            // 
-            // lblTituloT
-            // 
-            this.lblTituloT.AutoSize = true;
-            this.lblTituloT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTituloT.Location = new System.Drawing.Point(26, 31);
-            this.lblTituloT.Name = "lblTituloT";
-            this.lblTituloT.Size = new System.Drawing.Size(97, 20);
-            this.lblTituloT.TabIndex = 14;
-            this.lblTituloT.Text = "Valor de t:";
             // 
             // lblP2
             // 
@@ -277,7 +277,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.LightCyan;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1433, 717);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblTituloP0);
